@@ -1,0 +1,19 @@
+# Private workflow docs - never commit
+CLAUDE.md
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
