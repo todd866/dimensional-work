@@ -1,0 +1,276 @@
+%------------------------------------------------------------------------------
+% Supplementary Material for: The Dimensional Landauer Bound
+%------------------------------------------------------------------------------
+\documentclass[aps,prx,twocolumn,superscriptaddress,floatfix]{revtex4-2}
+\usepackage{amsmath,amssymb,amsfonts,graphicx,bm}
+\usepackage{hyperref}
+
+\begin{document}
+
+\title{Supplementary Material: The Dimensional Landauer Bound}
+\author{Ian Todd}
+\affiliation{Sydney Medical School, University of Sydney, Sydney, NSW 2006, Australia}
+
+\maketitle
+
+%==============================================================================
+\appendix
+%==============================================================================
+
+%------------------------------------------------------------------------------
+\section{Formation Cost vs.\ Maintenance Cost}
+\label{app:formation-maintenance}
+%------------------------------------------------------------------------------
+
+The Dimensional Landauer Bound (Eq.~3 in main text) establishes a minimum \emph{formation cost}: the thermodynamic work required to project a high-dimensional distribution onto a lower-dimensional manifold. This is analogous to Landauer's bound on bit erasure---a one-time energetic cost for a state transition.
+
+However, biological and artificial systems typically operate as non-equilibrium steady states (NESS), continuously maintaining low-dimensional representations against thermal fluctuations. This incurs a \emph{maintenance cost}: ongoing power dissipation to sustain the projection.
+
+The key result is that the geometric complexity $C_\Phi$ governs both costs:
+\begin{itemize}
+\item \textbf{Formation:} $W_{\mathrm{form}} \geq k_B T\, C_\Phi$ (Joules, one-time)
+\item \textbf{Maintenance:} $P_{\mathrm{maint}} \propto k_B T\, C_\Phi / \tau_{\mathrm{relax}}$ (Watts, continuous)
+\end{itemize}
+where $\tau_{\mathrm{relax}}$ is the relaxation time of the confining potential.
+
+The simulations in the main text measure maintenance power, which is the physically relevant quantity for living systems that must ``pay rent'' to sustain function. The scaling of maintenance power with geometric parameters validates the framework even though the simulations do not directly measure the formation bound.
+
+%------------------------------------------------------------------------------
+\section{Derivation of the Dimensional Landauer Bound}
+\label{app:derivation}
+%------------------------------------------------------------------------------
+
+We derive the Dimensional Landauer Bound from stochastic thermodynamics, showing that the geometric contraction cost $C_\Phi$ arises necessarily from entropy production during dimensional projection.
+
+\subsection{Setup: Projection as a physical process}
+
+Consider a system with microstate $x \in \mathbb{R}^{D_\mathrm{in}}$ coupled to a heat bath at temperature $T$. The system evolves under overdamped Langevin dynamics:
+\begin{equation}
+dx_t = \mu F(x_t, \lambda_t) dt + \sqrt{2\mu k_B T}\, dW_t,
+\end{equation}
+where $\mu$ is mobility, $F$ is the total force (including control), $\lambda_t$ is a time-dependent protocol, and $W_t$ is a Wiener process.
+
+A dimensional projection $\Phi: \mathbb{R}^{D_\mathrm{in}} \to \mathbb{R}^{D_\mathrm{out}}$ with $D_\mathrm{out} < D_\mathrm{in}$ is implemented by a control protocol that:
+\begin{enumerate}
+\item Confines the distribution to a neighborhood of the target manifold $\mathcal{M} = \Phi^{-1}(y)$
+\item Maintains this confinement against thermal fluctuations
+\end{enumerate}
+
+\subsection{Entropy production during projection}
+
+The total entropy production during a process from time $0$ to $\tau$ is~\cite{seifert2012}:
+\begin{equation}
+\Delta S_\mathrm{tot} = \Delta S_\mathrm{sys} + \Delta S_\mathrm{bath} \geq 0,
+\end{equation}
+where $\Delta S_\mathrm{bath} = Q/T$ and $Q$ is heat dissipated to the bath.
+
+For the system entropy, we have:
+\begin{equation}
+\Delta S_\mathrm{sys} = S[p_\tau] - S[p_0] = -k_B \int p_\tau \ln p_\tau + k_B \int p_0 \ln p_0.
+\end{equation}
+
+\subsection{The projection bound}
+
+The key insight is that dimensional projection changes the \emph{support} of the distribution. Let $p_0(x)$ be the initial distribution over $\mathbb{R}^{D_\mathrm{in}}$ and $p_\tau(y)$ be the final distribution over $\mathbb{R}^{D_\mathrm{out}}$ after projection.
+
+The minimal entropy production for this transformation is bounded by the relative entropy between the initial distribution and any distribution that could have produced the final state via the projection $\Phi$:
+\begin{equation}
+\Delta S_\mathrm{tot} \geq k_B D_\mathrm{KL}(p_0(x) \| \Phi^\dagger p_\tau(y)),
+\end{equation}
+where $\Phi^\dagger p_\tau(y)$ is the lifted distribution---the maximum entropy distribution on $\mathbb{R}^{D_\mathrm{in}}$ consistent with the marginal $p_\tau(y)$ under $\Phi$.
+
+This follows from the data processing inequality: the KL divergence cannot increase under the application of a stochastic map, and the projection $\Phi$ is precisely such a map.
+
+\subsection{Work-entropy relation}
+
+From the first law, the work done on the system equals:
+\begin{equation}
+W = \Delta F + Q,
+\end{equation}
+where $\Delta F$ is the change in free energy. For an isothermal process:
+\begin{equation}
+W = \Delta F + T \Delta S_\mathrm{bath} = \Delta F + T(\Delta S_\mathrm{tot} - \Delta S_\mathrm{sys}).
+\end{equation}
+
+For a projection that reduces information content by $\Delta I$ bits while incurring geometric contraction cost $C_\Phi$, the minimum work satisfies:
+\begin{equation}
+\boxed{W_\mathrm{min} \geq k_B T \ln 2 \cdot \Delta I + k_B T \cdot C_\Phi,}
+\end{equation}
+where:
+\begin{itemize}
+\item $k_B T \ln 2 \cdot \Delta I$ is the standard Landauer cost of erasing $\Delta I$ bits
+\item $k_B T \cdot C_\Phi$ is the \emph{dimensional work}---the geometric cost of the projection itself
+\end{itemize}
+
+\subsection{Geometric interpretation of $C_\Phi$}
+
+The contraction cost has a geometric interpretation. For a smooth projection $\Phi$ with Jacobian $J_\Phi$, the infinitesimal volume element transforms as:
+\begin{equation}
+dV_\mathrm{out} = \sqrt{\det(J_\Phi J_\Phi^\top)}\, dV_\mathrm{in}.
+\end{equation}
+
+The contraction cost is the expected log-volume ratio:
+\begin{equation}
+C_\Phi = \left\langle \ln \frac{dV_\mathrm{in}}{dV_\mathrm{out}} \right\rangle = -\frac{1}{2}\left\langle \ln \det(J_\Phi J_\Phi^\top) \right\rangle_{p_0(x)}.
+\end{equation}
+
+For a projection onto a curved manifold with principal curvatures $\kappa_i$, this includes contributions from both:
+\begin{enumerate}
+\item \textbf{Dimensional reduction}: $\frac{1}{2}(D_\mathrm{in} - D_\mathrm{out})\ln(2\pi e \sigma^2)$ for Gaussian fluctuations of width $\sigma$
+\item \textbf{Curvature}: Additional terms proportional to $\kappa_i^2 \sigma^2$ from the non-Euclidean geometry of the target manifold
+\end{enumerate}
+
+%------------------------------------------------------------------------------
+\section{Relation to Rate-Distortion Theory}
+\label{app:rate-distortion}
+%------------------------------------------------------------------------------
+
+Shannon's rate-distortion theory~\cite{cover2006} establishes the minimum number of bits required to represent a source $X$ with expected distortion at most $D$:
+\begin{equation}
+R(D) = \min_{p(\hat{x}|x): \mathbb{E}[d(X,\hat{X})] \leq D} I(X; \hat{X}).
+\end{equation}
+
+The Dimensional Landauer Bound is \emph{complementary} to rate-distortion theory:
+
+\begin{center}
+\begin{tabular}{lcc}
+\hline
+& \textbf{Rate-Distortion} & \textbf{Dimensional Landauer} \\
+\hline
+Question & How many bits? & How many joules? \\
+Units & bits & $k_B T$ (energy) \\
+Constraint & Distortion $D$ & Fidelity $\varepsilon$ \\
+Output & $R(D)$ & $W_\mathrm{min}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+Rate-distortion theory tells you the minimum \emph{information} required for lossy compression. The Dimensional Landauer Bound tells you the minimum \emph{energy} required to physically implement that compression in a thermal environment.
+
+The connection is:
+\begin{equation}
+W_\mathrm{min} \geq k_B T \ln 2 \cdot R(D) + k_B T \cdot C_\Phi(D),
+\end{equation}
+where $C_\Phi(D)$ is the geometric cost of the optimal encoder achieving rate $R(D)$.
+
+Crucially, even when $R(D) = 0$ (lossless transmission of already-compressed data), dimensional work $C_\Phi > 0$ may still be required if the physical representation changes geometry.
+
+%------------------------------------------------------------------------------
+\section{Quantitative Validation of the Bound}
+\label{app:validation}
+%------------------------------------------------------------------------------
+
+We validate the Dimensional Landauer Bound quantitatively in our simulations.
+
+\subsection{Simulation 1: Curved manifold confinement}
+
+For Brownian motion confined to the manifold $x_2 = A\sin(Bx_1)$, the theoretical contraction cost is:
+\begin{equation}
+C_\Phi^\mathrm{theory} = \frac{1}{2}\ln(1 + A^2 B^2 \langle\cos^2(Bx_1)\rangle) + \frac{k\sigma_\perp^2}{2k_B T},
+\end{equation}
+where $\sigma_\perp^2$ is the variance of fluctuations perpendicular to the manifold and $k$ is the confinement stiffness.
+
+For our parameters ($A=1$, $B=2$, $k=10$, $D=0.1$, $T=1$):
+\begin{itemize}
+\item Theoretical: $C_\Phi^\mathrm{theory} \approx 0.69$
+\item Measured: $\langle W_\mathrm{ctrl}/T \rangle / k_B T \approx 0.75 \pm 0.08$
+\end{itemize}
+
+The measured work exceeds the theoretical bound, as required by the second law, with the excess representing irreversible losses.
+
+\subsection{Simulation 2: Kuramoto oscillators}
+
+For $N$ coupled oscillators with order parameter $r$, the effective dimensionality is:
+\begin{equation}
+D_\mathrm{eff} = \frac{(\sum_i \lambda_i)^2}{\sum_i \lambda_i^2} \approx 1 + (N-1)(1-r^2),
+\end{equation}
+where $\lambda_i$ are eigenvalues of the phase covariance matrix.
+
+The contraction cost for driving a 1D readout from $N$ oscillators scales as:
+\begin{equation}
+C_\Phi \sim \ln D_\mathrm{eff} \sim \ln N - r^2 \ln N.
+\end{equation}
+
+This predicts control work should decrease with $r^2$, which we observe (Fig.~2).
+
+\subsection{Simulation 3: Autoencoder bottleneck}
+
+For data with intrinsic dimension $d^*$ compressed to bottleneck dimension $d_b$, the contraction cost diverges as:
+\begin{equation}
+C_\Phi \sim \begin{cases}
+O(1) & d_b \geq d^* \\
+O((d^* - d_b)\ln(1/\varepsilon)) & d_b < d^*
+\end{cases}
+\end{equation}
+where $\varepsilon$ is reconstruction error.
+
+This explains the sharp increase in training effort (SGD work proxy) below $d_b = d^* = 2$ (Fig.~3).
+
+%------------------------------------------------------------------------------
+\section{Experimental Proposals}
+\label{app:experiments}
+%------------------------------------------------------------------------------
+
+We propose three experimental tests of the Dimensional Landauer Bound.
+
+\subsection{Colloidal particles in optical traps}
+
+\textbf{Setup}: A colloidal particle in a 2D optical trap, with feedback control confining it to a 1D curved path.
+
+\textbf{Protocol}:
+\begin{enumerate}
+\item Initialize particle in 2D Gaussian equilibrium
+\item Apply feedback control to confine to curve $y = f(x)$ with varying curvature
+\item Measure heat dissipation via position tracking and Jarzynski equality
+\item Compare to theoretical $W_\mathrm{dim} = k_B T C_\Phi$
+\end{enumerate}
+
+\textbf{Prediction}: Heat dissipation should scale with integrated squared curvature $\int \kappa^2(s) ds$.
+
+\textbf{Feasibility}: Standard optical tweezer setup with video microscopy. Similar to Bérut et al.~\cite{berut2012} Landauer verification.
+
+\subsection{Electronic feedback circuits}
+
+\textbf{Setup}: An RC circuit with $N$ noisy nodes, feedback-controlled to produce a 1D output voltage.
+
+\textbf{Protocol}:
+\begin{enumerate}
+\item Measure thermal noise spectrum across all nodes
+\item Apply linear feedback to project onto target 1D subspace
+\item Measure power dissipation in feedback amplifiers
+\item Vary projection geometry and compare to theory
+\end{enumerate}
+
+\textbf{Prediction}: Dissipation $\propto k_B T \ln(N)$ for random projection, reduced for coherent (eigenmode-aligned) projection.
+
+\subsection{Neural population recordings}
+
+\textbf{Setup}: Multi-electrode array recordings from motor cortex during reaching tasks.
+
+\textbf{Protocol}:
+\begin{enumerate}
+\item Estimate neural manifold dimensionality $D_\mathrm{eff}$ via participation ratio
+\item Quantify metabolic cost via BOLD or direct oxygen measurements
+\item Correlate $D_\mathrm{eff}$ with metabolic rate across conditions
+\end{enumerate}
+
+\textbf{Prediction}: Tasks requiring low-dimensional readout from high-dimensional population should show elevated metabolic cost scaling as $\sim \ln(D_\mathrm{eff}/D_\mathrm{out})$.
+
+%------------------------------------------------------------------------------
+\section{Connection to Existing Bounds}
+\label{app:connections}
+%------------------------------------------------------------------------------
+
+The Dimensional Landauer Bound connects to several established results:
+
+\textbf{Sagawa-Ueda bound}~\cite{sagawa2010}: For feedback-controlled systems, the extractable work is bounded by mutual information. Our bound is complementary: the work \emph{required} for dimensional projection is bounded by the contraction cost.
+
+\textbf{Jarzynski equality}~\cite{jarzynski1997}: Our bound is consistent with $\langle e^{-W/k_B T}\rangle = e^{-\Delta F/k_B T}$. The dimensional work appears in the non-equilibrium free energy difference.
+
+\textbf{Crooks fluctuation theorem}~\cite{crooks1999}: The bound can be tightened using Crooks' relation to account for fluctuations in the projection process.
+
+\textbf{Information geometry}~\cite{amari2016}: The contraction cost $C_\Phi$ is related to the Fisher information metric on the statistical manifold. Projections that preserve Fisher information incur lower dimensional work.
+
+\bibliography{references}
+
+\end{document}
