@@ -13,7 +13,7 @@
 \date{\today}
 
 \begin{abstract}
-Landauer's principle establishes a minimum energetic cost for logically irreversible operations, linking information erasure to heat dissipation of at least $k_B T \ln 2$ per bit. While foundational, this bound assumes that information exists on a fixed, low-dimensional substrate. Biological, physical, and artificial systems, however, typically process information by compressing high-dimensional dynamical states into low-dimensional representational manifolds. We show that this \emph{dimensional reduction} imposes an additional thermodynamic cost. We derive a \emph{Dimensional Landauer Bound}: $W_{\min} \ge k_B T \ln 2\, \Delta I + k_B T\, C_\Phi$, where $C_\Phi$ captures the geometric irreversibility of dimensional contraction. Using stochastic thermodynamics and information geometry, we demonstrate how this framework unifies phenomena from neural coding to deep learning stability. Dimensional work explains why biological systems favor oscillatory dynamics and why engineered systems approach the Landauer limit only when dimensionality is already minimized. Our results establish dimensionality---rather than the bit---as the fundamental resource underlying efficient computation.
+Landauer's principle establishes a minimum energetic cost for logically irreversible operations, linking information erasure to heat dissipation of at least $k_B T \ln 2$ per bit. While foundational, this bound assumes that information exists on a fixed, low-dimensional substrate. Biological, physical, and artificial systems, however, typically process information by compressing high-dimensional dynamical states into low-dimensional representational manifolds. We show that this \emph{dimensional reduction} imposes an additional thermodynamic cost. We derive a \emph{Dimensional Landauer Bound}: $W_{\min} \ge k_B T \ln 2\, \Delta I + k_B T\, C_\Phi$, where $C_\Phi$ captures the geometric irreversibility of dimensional contraction. Crucially, we identify a \emph{geometric sign flip}: manifold curvature \emph{aids} compression (geodesic focusing reduces formation work) but \emph{hinders} maintenance (curvature increases steady-state dissipation). This creates a fundamental trade-off---high curvature is easy to write but hard to hold---suggesting that efficient systems dynamically modulate geometry across encoding phases. Using stochastic thermodynamics and information geometry, we demonstrate how this framework unifies phenomena from neural coding to deep learning stability. Our results establish dimensionality---rather than the bit---as the fundamental resource underlying efficient computation.
 \end{abstract}
 
 \maketitle
@@ -70,6 +70,30 @@ where $J_\Phi$ is the Jacobian of $\Phi$. Projections with stronger contraction 
 Under a distortion constraint, rate-distortion theory~\cite{cover2006} combined with Landauer's principle implies $W_{\min} \ge k_B T \ln 2\, R_\varepsilon$, identifying an energetic cost of representational fidelity independent of bit erasure. Whereas rate-distortion theory bounds the minimum \emph{bits} required, the Dimensional Landauer Bound constrains the minimum \emph{joules} required to physically realize a given low-dimensional representation.
 
 Crucially, the geometric complexity $C_\Phi$ governs not only the \emph{formation cost} (work to establish the projection) but also the \emph{maintenance cost} (power to sustain it). Living systems operate as non-equilibrium steady states, continuously dissipating energy to maintain low-dimensional function against thermal fluctuations. The maintenance power scales with $C_\Phi$: curved or high-contraction manifolds require steeper confining potentials, which generate proportionally higher dissipation rates.
+
+\subsection{The geometric sign flip: Compression vs.\ maintenance}
+
+A key result of this work is the identification of a \emph{geometric sign flip} in the thermodynamic cost of dimensionality reduction. The work required to \emph{form} a low-dimensional representation and the power required to \emph{maintain} it arise from distinct dynamical regimes, and manifold curvature contributes with opposite sign in each.
+
+During the \emph{compression phase}---the transition $\rho_0 \rightarrow \rho_M$ that maps an initial distribution onto a target manifold $M$---positive curvature induces geodesic convergence. Trajectories naturally focus toward the manifold, effectively amplifying the gradient descent flow. Consequently, the geometric contribution to the compression work, $W_{\mathrm{geom}}$, can be \emph{negative} relative to a flat baseline, as the manifold geometry itself assists in ``funneling'' probability mass into the lower-dimensional state:
+\begin{equation}
+W_{\mathrm{geom}} \propto -\int_M \kappa_{\mathrm{eff}}(x)\,\|\nabla\phi(x)\|^2\,d\mu_M(x),
+\end{equation}
+where $\kappa_{\mathrm{eff}}$ is an effective curvature proxy and the negative sign reflects geometric focusing.
+
+In contrast, during the \emph{maintenance phase}, when the system must remain localized on $M$ against stochastic perturbations, curvature produces the opposite effect. Increased curvature expands the set of noise directions leading off the manifold, increasing the effective escape volume. To maintain a fixed stationary variance on a curved manifold, stronger restoring forces are required, generating higher maintenance power:
+\begin{equation}
+P_{\mathrm{keep}} \propto D\int_M \kappa_{\mathrm{eff}}(x)\, d\mu_M(x),
+\end{equation}
+where $D$ is the diffusion coefficient.
+
+Thus curvature that reduces the cost of \emph{forming} the representation simultaneously increases the cost of \emph{holding} it:
+\begin{center}
+\emph{High curvature: easy to write, hard to hold.}\\
+\emph{Low curvature: harder to write, cheap to maintain.}
+\end{center}
+
+This sign flip establishes a geometric law for information-processing manifolds. It suggests an architectural design principle for biological, neural, and neuromorphic systems: dynamically modulate curvature---increase it to facilitate rapid state transitions; decrease it to minimize metabolic rent during retention. The same geometry that accelerates collapse imposes a cost on stability, revealing a structural tension at the heart of dissipative information encoding.
 
 %------------------------------------------------------------------------------
 \section{Numerical Demonstrations}
