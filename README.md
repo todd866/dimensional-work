@@ -3,7 +3,7 @@
 **Extending Landauer's Principle to Geometric Compression**
 
 > **Target:** Physical Review E
-> **Status:** Ready to submit (pivoted from PRX desk rejection Dec 10, 2025)
+> **Status:** In preparation
 
 ## Abstract
 
@@ -29,15 +29,13 @@ This framework:
 
 ```
 dimensional-work/
-├── manuscript_pre.tex/pdf      # PRE submission manuscript
-├── cover_letter_pre.tex/pdf    # PRE cover letter
+├── manuscript_pre.tex/pdf      # Main manuscript
 ├── references.bib              # Bibliography
 ├── code/
-│   └── simulations.py          # All simulations (consolidated)
+│   └── simulations.py          # All simulations
 ├── figures/                    # Generated figures (PDF + PNG)
 ├── paper2/                     # "Dimensional Work of Surfaces" (PRE)
-├── paper3/                     # "Dimensional Work of Black Holes" (PRD)
-└── archive/                    # PRX submission + old code files
+└── paper3/                     # "Dimensional Work of Black Holes" (PRD)
 ```
 
 ## Numerical Demonstrations
@@ -56,14 +54,6 @@ python simulations.py kuramoto     # Coherence vs work
 python simulations.py autoencoder  # Bottleneck divergence
 python simulations.py ephaptic     # Neural sheet coupling
 ```
-
-## Submission History
-
-| Date | Journal | Outcome |
-|------|---------|---------|
-| Dec 6, 2025 | PRX | Submitted (XM10873) |
-| Dec 10, 2025 | PRX | Desk reject |
-| TBD | PRE | Ready to submit |
 
 ## Requirements
 

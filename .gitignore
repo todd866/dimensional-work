@@ -1,5 +1,10 @@
-# Private workflow docs - never commit
+# Private - never commit
 CLAUDE.md
+WORKFLOW.md
+archive/
+cover_letter*.tex
+cover_letter*.pdf
+PROJECT_STATUS.md
 
 # LaTeX build artifacts
 *.aux
