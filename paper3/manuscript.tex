@@ -1,0 +1,217 @@
+\documentclass[aps,prd,twocolumn,superscriptaddress,floatfix]{revtex4-2}
+\usepackage{amsmath,amssymb,amsfonts,graphicx,bm}
+\usepackage{hyperref}
+
+\begin{document}
+
+\title{Dimensional Work and Black Hole Formation: Why Singularities Require Infinite Energy}
+
+\author{Ian Todd}
+\email{itod2305@uni.sydney.edu.au}
+\affiliation{Sydney Medical School, University of Sydney, Sydney, NSW 2006, Australia}
+
+\date{\today}
+
+\begin{abstract}
+The holographic principle suggests that black hole information content scales with horizon area rather than enclosed volume, implying a fundamental dimensional reduction from 3D to 2D. We apply the Dimensional Landauer Bound---which establishes the thermodynamic cost of constraining high-dimensional dynamics to lower-dimensional manifolds---to gravitational collapse. We show that the dimensional work required to project three-dimensional matter onto a two-dimensional horizon diverges as the Schwarzschild radius is approached:
+\[
+W_{\mathrm{dim}} \to \infty \quad \text{as} \quad r \to r_s.
+\]
+This divergence implies that black hole formation is an \emph{asymptotic} process: from any external reference frame, the complete dimensional projection is never achieved. Hawking radiation emerges as the \emph{maintenance power}---the continuous dissipation required to sustain the holographic projection against quantum fluctuations. The information paradox is reframed: information is never fully compressed to two dimensions but remains perpetually approaching this limit. We show that the Dimensional Landauer Bound is consistent with Bekenstein-Hawking entropy when the projection scale is the Planck length, and that the membrane paradigm acquires a precise thermodynamic interpretation. These results suggest that singularities are not geometrically forbidden but \emph{thermodynamically inaccessible}---requiring infinite power to maintain.
+\end{abstract}
+
+\maketitle
+
+%------------------------------------------------------------------------------
+\section{Introduction}
+%------------------------------------------------------------------------------
+
+Black holes present fundamental puzzles at the intersection of general relativity, quantum mechanics, and thermodynamics. The Bekenstein-Hawking entropy~\cite{bekenstein1973,hawking1975}
+\begin{equation}
+S_{\mathrm{BH}} = \frac{k_B c^3 A}{4 G \hbar} = \frac{k_B A}{4 \ell_P^2}
+\end{equation}
+scales with horizon \emph{area} rather than enclosed volume, suggesting a fundamental dimensional reduction. The holographic principle~\cite{susskind1995,thooft1993} formalizes this insight: the maximum entropy of a region is bounded by its boundary area, not its volume.
+
+Yet the thermodynamic origin of this dimensional reduction remains unclear. Why should gravity compress three-dimensional information onto a two-dimensional surface? What energetic processes accompany this compression?
+
+Recently, the Dimensional Landauer Bound was introduced to quantify the thermodynamic cost of constraining high-dimensional stochastic systems to lower-dimensional manifolds~\cite{todd2025landauer}. The bound states that dimensional reduction requires minimum work
+\begin{equation}
+W_{\mathrm{dim}} = k_B T \, C_\Phi,
+\end{equation}
+where $C_\Phi = D_{\mathrm{KL}}(p(x)\,\Vert\,\Phi^\dagger p(y))$ measures the geometric contraction cost.
+
+In this paper, we apply this framework to gravitational collapse. We show that projecting three-dimensional matter onto a two-dimensional horizon requires work that diverges at the Schwarzschild radius. This suggests that black hole formation is fundamentally asymptotic---complete dimensional collapse is thermodynamically forbidden.
+
+%------------------------------------------------------------------------------
+\section{Dimensional Work in Gravitational Collapse}
+%------------------------------------------------------------------------------
+
+\subsection{The holographic projection}
+
+Consider matter collapsing toward a Schwarzschild black hole with mass $M$ and Schwarzschild radius $r_s = 2GM/c^2$. The holographic principle implies that the ultimate description of this matter lives on the two-dimensional horizon rather than in the three-dimensional interior.
+
+We model this as a dimensional projection $\Phi: \mathbb{R}^3 \to \mathbb{R}^2$, mapping volume degrees of freedom onto the horizon surface. The Jacobian of this projection relates infinitesimal volume elements to area elements:
+\begin{equation}
+J_\Phi = \frac{\partial(\theta, \phi)}{\partial(r, \theta, \phi)} \sim \frac{1}{r - r_s}.
+\end{equation}
+
+\subsection{Divergence of dimensional work}
+
+The dimensional contraction cost involves the log-determinant of the metric:
+\begin{equation}
+C_\Phi \sim \left\langle \log\sqrt{\det(J_\Phi J_\Phi^\top)} \right\rangle.
+\end{equation}
+
+Near the horizon, the radial metric component in Schwarzschild coordinates is
+\begin{equation}
+g_{rr} = \left(1 - \frac{r_s}{r}\right)^{-1} \to \infty \quad \text{as} \quad r \to r_s.
+\end{equation}
+
+The proper distance to the horizon diverges logarithmically:
+\begin{equation}
+\ell_{\mathrm{proper}} \sim r_s \log\left(\frac{r - r_s}{r_s}\right).
+\end{equation}
+
+The dimensional work required to compress matter from radius $r$ onto the horizon scales as:
+\begin{equation}
+W_{\mathrm{dim}}(r) \sim k_B T_H \log\left(\frac{r}{r - r_s}\right),
+\end{equation}
+where $T_H = \hbar c^3 / (8\pi G M k_B)$ is the Hawking temperature.
+
+As $r \to r_s$:
+\begin{equation}
+\boxed{W_{\mathrm{dim}} \to \infty.}
+\end{equation}
+
+\subsection{Physical interpretation}
+
+This divergence has profound implications:
+
+\textbf{Black holes are asymptotic objects.} From an external observer's perspective, matter never crosses the horizon---it asymptotically approaches while the dimensional work required for complete projection diverges. The ``frozen star'' picture acquires thermodynamic meaning.
+
+\textbf{Infinite time dilation as infinite work.} The coordinate time for infall diverges as $t \sim r_s \log[(r-r_s)/r_s]$. This is not merely a coordinate artifact but reflects the infinite work required for dimensional compression.
+
+\textbf{Singularities are thermodynamically inaccessible.} While general relativity permits singularities as geometric solutions, the Dimensional Landauer Bound implies they are \emph{thermodynamically inaccessible states}: the power required to maintain complete dimensional collapse diverges, making singularities unreachable from any finite-energy process.
+
+%------------------------------------------------------------------------------
+\section{Hawking Radiation as Maintenance Power}
+%------------------------------------------------------------------------------
+
+The Dimensional Landauer Bound implies that maintaining a low-dimensional projection against thermal fluctuations requires continuous power dissipation. We identify Hawking radiation not merely as cooling, but as the \emph{maintenance power} required to sustain the holographic projection.
+
+\subsection{The metabolic cost of the horizon}
+
+In our framework, the event horizon is a non-equilibrium steady state (NESS) that projects 3D bulk degrees of freedom onto a 2D surface. Sustaining this projection requires suppressing orthogonal fluctuations. The power required to maintain this constraint follows from the maintenance bound~\cite{todd2025landauer}:
+\begin{equation}
+P_{\mathrm{maint}} \propto \frac{k_B T_{\mathrm{eff}} \, C_\Phi}{\tau_{\mathrm{relax}}},
+\end{equation}
+where $T_{\mathrm{eff}}$ is the effective temperature and $\tau_{\mathrm{relax}}$ is the relaxation time.
+
+Identifying the bath temperature with the Hawking temperature $T_H = \hbar c^3 / (8\pi G M k_B)$ and the relaxation time with the light-crossing time $r_s/c$, the maintenance power scales as:
+\begin{equation}
+P_{\mathrm{maint}} \sim T_H^4 \cdot A \sim \frac{\hbar c^6}{G^2 M^2}.
+\end{equation}
+
+This matches the Stefan-Boltzmann luminosity of a black hole. Hawking radiation is the thermodynamic ``rent'' the black hole must pay to maintain the dimensional reduction of bulk matter. If the black hole stops accreting mass (income), it can no longer afford the metabolic cost of the horizon, and thus evaporates to reduce its geometric overhead.
+
+\subsection{Evaporation as rent default}
+
+Black hole evaporation acquires a natural interpretation: a black hole that cannot replenish its mass through accretion eventually ``defaults'' on its maintenance costs. The horizon shrinks because the system can no longer sustain the power required to project matter onto a surface of that area. The endpoint of evaporation is not a singularity but a state where the maintenance cost finally reaches zero---when no dimensional projection remains to sustain.
+
+%------------------------------------------------------------------------------
+\section{Consistency with Bekenstein-Hawking Entropy}
+%------------------------------------------------------------------------------
+
+Rather than deriving the Bekenstein-Hawking entropy from first principles, we show that the Dimensional Landauer Bound is \emph{consistent} with black hole thermodynamics only if the holographic projection occurs at the Planck scale.
+
+\subsection{The pixel size of projection}
+
+The total dimensional work invested to form the horizon is the integral of the contraction cost:
+\begin{equation}
+W_{\mathrm{total}} = \int_\Sigma k_B T_H \, c_\Phi \, dA,
+\end{equation}
+where $c_\Phi$ is the contraction cost density. Thermodynamic consistency requires that this work equal the entropic capacity of the horizon, $TS$.
+
+Imposing the known Bekenstein-Hawking entropy $S_{\mathrm{BH}} = k_B A / (4\ell_P^2)$, we find that the contraction cost density must satisfy:
+\begin{equation}
+c_\Phi \sim \frac{1}{\ell_P^2}.
+\end{equation}
+
+This implies that the ``resolution'' of the dimensional projection---the effective pixel size of the holographic map---is physically set by the Planck length $\ell_P$. The Dimensional Landauer Bound thus provides a thermodynamic constraint linking the macroscopic geometry of the horizon ($r_s$) to the microscopic granularity of spacetime ($\ell_P$).
+
+\subsection{Interpretation}
+
+This result should not be read as a derivation of quantum gravity, but as a \emph{consistency check}: if the Dimensional Landauer framework applies to gravitational systems, then the natural scale at which holographic projection saturates is precisely the Planck scale. The Bekenstein-Hawking entropy counts the number of Planck-area ``pixels'' required to encode the dimensional projection of the bulk.
+
+%------------------------------------------------------------------------------
+\section{The Membrane Paradigm Revisited}
+%------------------------------------------------------------------------------
+
+The membrane paradigm~\cite{thorne1986} treats the stretched horizon as a physical membrane with viscosity, resistivity, and temperature. Our framework provides thermodynamic foundations for this picture.
+
+\subsection{Surface tension from dimensional work}
+
+In Paper II~\cite{todd2025surfaces}, we showed that surface tension emerges from dimensional work:
+\begin{equation}
+\gamma = \frac{\partial W_{\mathrm{dim}}}{\partial A}.
+\end{equation}
+
+For the black hole horizon, this gives a surface tension:
+\begin{equation}
+\gamma_H \sim \frac{k_B T_H}{\ell_P^2} \sim \frac{\hbar c}{G M \ell_P^2}.
+\end{equation}
+
+The stretched horizon is not merely an analogy---it is a surface under genuine thermodynamic tension arising from dimensional compression.
+
+\subsection{Viscosity from dissipation}
+
+The shear viscosity of the membrane paradigm, $\eta = \hbar/(16\pi G)$, can be understood as the dissipation rate during dimensional reorganization of horizon degrees of freedom.
+
+%------------------------------------------------------------------------------
+\section{Resolution of the Information Paradox}
+%------------------------------------------------------------------------------
+
+The information paradox asks: where does information go when matter crosses the horizon? Our framework suggests a resolution.
+
+\subsection{Information never fully crosses}
+
+If dimensional projection to 2D requires infinite work, then from any finite-energy perspective, matter never fully reaches the horizon. Information approaches the 2D limit asymptotically but is never actually compressed.
+
+\subsection{Scrambling as partial projection}
+
+What appears as ``scrambling'' at the horizon is the ongoing process of dimensional compression. Information is not lost---it is continuously being projected, with the projection never completing.
+
+\subsection{Page curve from dimensional flow}
+
+The Page curve~\cite{page1993} describes how entanglement entropy first increases then decreases during evaporation. In our picture:
+- Early time: Dimensional work accumulates as matter approaches horizon
+- Page time: Maximum dimensional compression achieved for the shrinking horizon
+- Late time: Hawking radiation carries away the dimensional work as heat
+
+The entanglement entropy tracks the dimensional work invested in the projection.
+
+%------------------------------------------------------------------------------
+\section{Discussion}
+%------------------------------------------------------------------------------
+
+We have shown that the Dimensional Landauer Bound, applied to gravitational collapse, implies that black hole horizons are non-equilibrium steady states requiring continuous maintenance power. The formation work diverges at the Schwarzschild radius, while the maintenance power manifests as Hawking radiation. Singularities are not geometrically forbidden but \emph{thermodynamically inaccessible}---unreachable from any finite-energy process.
+
+Several consequences follow:
+
+\textbf{Cosmic censorship.} If complete dimensional collapse requires infinite power to maintain, naked singularities cannot persist as stable configurations. Cosmic censorship becomes a thermodynamic necessity rather than a conjecture.
+
+\textbf{Firewall paradox.} The apparent conflict between smooth horizons and unitarity dissolves if the horizon is understood as a dissipative structure paying continuous rent. The ``firewall'' is the divergent maintenance cost preventing complete dimensional projection.
+
+\textbf{Quantum gravity.} Any theory of quantum gravity must respect the dimensional work bound. The consistency with Bekenstein-Hawking entropy at the Planck scale suggests the bound provides a thermodynamic window into UV physics.
+
+\textbf{Analog systems.} Laboratory systems exhibiting dimensional projection (cold atoms, photonic lattices) may simulate aspects of horizon thermodynamics without requiring astrophysical black holes.
+
+The Dimensional Landauer Bound thus provides a thermodynamic lens through which longstanding puzzles of black hole physics acquire new clarity. Black holes are not static endpoints but dissipative structures---dynamic processes of dimensional compression that pay continuous metabolic rent to maintain their low-dimensional horizons.
+
+\begin{acknowledgments}
+The author thanks the Sydney Medical School for support.
+\end{acknowledgments}
+
+\bibliography{references}
+
+\end{document}

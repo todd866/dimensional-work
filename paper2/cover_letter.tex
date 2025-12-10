@@ -1,0 +1,39 @@
+\documentclass[11pt]{letter}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\signature{Ian Todd\\Sydney Medical School\\University of Sydney\\itod2305@uni.sydney.edu.au}
+\address{Ian Todd\\Sydney Medical School\\University of Sydney\\Sydney, NSW 2006\\Australia}
+
+\begin{document}
+
+\begin{letter}{The Editors\\Physical Review E\\American Physical Society}
+
+\opening{Dear Editors,}
+
+I am pleased to submit our manuscript, ``The Dimensional Work of Surfaces: A Thermodynamic Origin of Minimal Geometry and Surface Tension,'' for consideration as a Research Article in \textit{Physical Review E}.
+
+\textbf{Summary.} Surface tension and minimal surfaces are foundational concepts in soft matter physics, geometry, and biological interfaces. Classical theory describes these phenomena through postulated energy functionals---$\gamma A$, the Young--Laplace law, and Helfrich curvature elasticity---but the thermodynamic origin of these geometric energies has remained opaque.
+
+In this work, we show that classical surface energetics emerge naturally from the \emph{Dimensional Landauer Bound}, a recently introduced generalization of Landauer's principle to high-dimensional stochastic systems constrained to lower-dimensional manifolds. When a noisy physical system is confined to a two-dimensional surface embedded in three dimensions, the minimum work required to impose that constraint is given by a KL divergence that, in the continuum limit, reduces to a functional of the induced metric:
+\[
+W_{\mathrm{dim}} \propto k_B T \int \log\sqrt{\det G(u,v)}\, p(u,v)\,du\,dv.
+\]
+Expanding this functional yields the area functional, the Young--Laplace pressure, and Helfrich curvature elasticity as successive orders of dimensional work.
+
+\textbf{Key Results.}
+\begin{enumerate}
+\item Surface tension $\gamma A$ emerges as the leading-order dimensional work for constraining fluctuations to a curved manifold.
+\item The Young--Laplace equation $\Delta P = 2\gamma H$ arises from variational minimization under volume constraint.
+\item Mean curvature flow is the gradient descent of dimensional work, with minimal surfaces as fixed points.
+\item Numerical simulations confirm that relaxation toward minimal surfaces corresponds to dimensional work minimization.
+\end{enumerate}
+
+\textbf{Why Physical Review E?} This manuscript bridges stochastic thermodynamics, soft matter physics, and differential geometry---all core areas of PRE's scope. We provide a unified thermodynamic derivation of surface energetics from information-theoretic principles, connecting classical capillarity to modern work on fluctuation theorems and nonequilibrium thermodynamics. The result that surface tension and curvature elasticity both arise from a single underlying principle---dimensional contraction---represents a conceptual advance that should interest the PRE readership across statistical physics, soft matter, and biological physics.
+
+We confirm that this manuscript has not been published and is not under consideration elsewhere. We have no conflicts of interest to declare.
+
+\closing{Sincerely,}
+
+\end{letter}
+\end{document}

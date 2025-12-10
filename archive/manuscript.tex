@@ -1,0 +1,251 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts,graphicx,bm}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{natbib}
+
+\title{The Dimensional Landauer Bound:\\
+Why Information Flow Requires Geometric Work}
+
+\author{Ian Todd\\
+\small Sydney Medical School, University of Sydney, Australia\\
+\small \texttt{itod2305@uni.sydney.edu.au}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Landauer's principle establishes a minimum energetic cost for logically irreversible operations, linking information erasure to heat dissipation of at least $k_B T \ln 2$ per bit. While foundational, this bound assumes that information exists on a fixed, low-dimensional substrate capable of representing bits without geometric constraint. Biological, physical, and artificial systems, however, typically process information by compressing high-dimensional dynamical states into low-dimensional representational manifolds. We show that this \emph{dimensional reduction} imposes an additional, previously unrecognized thermodynamic cost.
+
+We derive a \emph{Dimensional Landauer Bound}, proving that any mapping from a high-dimensional state space into a lower-dimensional channel requires not only the classical bitwise work of logical irreversibility, but also a \emph{geometric work term} proportional to the contraction ratio, curvature, and required stability of the projection. This \emph{dimensional work} arises from the energetic cost of confining trajectories to a lower-dimensional manifold and maintaining representational fidelity in the presence of noise.
+
+Using stochastic thermodynamics and information geometry, we show that the minimal work satisfies
+\[
+W_{\min} \ge k_B T \ln 2\, \Delta I + W_{\mathrm{dim}}(D_{\mathrm{in}},D_{\mathrm{out}},\varepsilon,\tau,\kappa),
+\]
+where $W_{\mathrm{dim}}$ captures the geometric irreversibility of dimensional contraction. We demonstrate how this framework unifies phenomena ranging from neural coding and biological information processing to measurement in quantum mechanics and the stability of deep learning systems. Dimensional work explains why biological systems favour oscillatory, coherent dynamics to reduce geometric cost, and why engineered systems approach the Landauer limit only when the underlying dimensionality is already minimized.
+
+Our results generalize the thermodynamics of information and show that \emph{information flow cannot occur without dimensional work}. This establishes dimensionality---rather than the bit---as the fundamental resource underlying efficient computation and communication in physical systems.
+\end{abstract}
+
+%------------------------------------------------------------------------------
+\section{Introduction}
+%------------------------------------------------------------------------------
+
+Landauer's principle states that erasing one bit of information in a physical system requires at least $k_B T \ln 2$ of dissipated energy~\citep{landauer1961,berut2012}. This insight, linking logical irreversibility to thermodynamic irreversibility, underpins the modern physics of computation, Maxwell's demon resolutions, and energetic analyses of digital devices~\citep{bennett1982,parrondo2015}.
+
+However, Landauer's bound implicitly assumes that the physical substrate carrying the information is (i) low-dimensional and (ii) already structured to stably represent discrete states. In realistic physical and biological systems, neither assumption holds. Neural populations, biochemical reaction networks, soft bodies, ecological collectives, and spatially extended physical fields all process information through \emph{continuous}, \emph{noisy}, high-dimensional dynamics. To produce meaningful, low-dimensional information---symbols, codes, decisions---these systems must compress high-dimensional states through \emph{dimensional bottlenecks}.
+
+This compression is not merely a logical operation; it is a \emph{geometric transformation}. Yet the energetic cost of this geometric transformation has not been formally accounted for in the thermodynamics of information.
+
+\subsection{Dimensionality as the upstream quantity}
+
+Information is typically treated as a symbolic abstraction: bits, messages, codes. For any physical system, however, information arises only after a \emph{projection} of high-dimensional dynamics into a low-dimensional representational manifold. This is true for:
+\begin{itemize}
+\item neurons forming a percept via population coding and low-dimensional manifolds~\citep{cunningham2014,gallego2017},
+\item biochemical networks collapsing many reaction pathways into a few control signals,
+\item quantum measurement projecting a high-dimensional state vector onto a small set of outcomes~\citep{zurek2003},
+\item machine learning models compressing large latent spaces into stable logits or bottleneck representations~\citep{tishby2000,shwartzziv2017}.
+\end{itemize}
+In all such cases, the representational channel has lower effective dimensionality than the underlying process. Thus, information processing fundamentally requires \emph{dimensional reduction}.
+
+Dimensional reduction is not merely lossy; it is \emph{energetically costly}.
+
+\subsection{Dimensional work: the missing thermodynamic term}
+
+Projecting a high-dimensional system into a lower-dimensional manifold imposes constraints:
+\begin{itemize}
+\item extraneous degrees of freedom must be suppressed,
+\item trajectories must be confined to a lower-dimensional attractor,
+\item curvature and distortion introduced by the projection must be stabilized,
+\item noise amplification near the bottleneck must be counteracted.
+\end{itemize}
+All of these require \emph{physical work}. We define this cost as \emph{dimensional work}. Just as Landauer quantifies bitwise irreversibility, dimensional work quantifies \emph{geometric irreversibility}.
+
+Dimensional work depends on:
+\begin{itemize}
+\item the ratio $D_{\mathrm{in}} / D_{\mathrm{out}}$,
+\item curvature and condition number of the projection operator,
+\item required fidelity (rate--distortion) $\varepsilon$,
+\item required coherence time $\tau$ of the representation.
+\end{itemize}
+This term is generically non-zero whenever the representational space is of lower dimension than the underlying space.
+
+\subsection{Statement of the Dimensional Landauer Bound}
+
+We prove that for any physical map
+\[
+\Phi: \mathbb{R}^{D_\mathrm{in}} \rightarrow \mathbb{R}^{D_\mathrm{out}}
+,\qquad D_\mathrm{out} < D_\mathrm{in},
+\]
+the minimal energetic cost satisfies
+\begin{equation}
+W_{\min} \ge k_B T \ln 2\, \Delta I + k_B T\, C_\Phi,
+\label{eq:dim_landauer_core}
+\end{equation}
+where $\Delta I$ is the logical information erased and $C_\Phi$ is a KL-based measure of dimensional contraction. Thus, even logically reversible or information-preserving processes incur unavoidable energetic cost when they require maintaining a lower-dimensional representation than the physical state.
+
+This generalizes Landauer's principle to physically embodied, high-dimensional systems, and reveals that dimensionality---not bits alone---sets the energetic budget.
+
+%------------------------------------------------------------------------------
+\section{Formal Framework and Main Theorem}
+%------------------------------------------------------------------------------
+
+\subsection{High-dimensional stochastic dynamics}
+
+We consider a system with state $x_t \in \mathbb{R}^{D_\mathrm{in}}$ evolving under overdamped Langevin dynamics,
+\begin{equation}
+\dot{x}_t = f(x_t,t) + \sqrt{2D}\,\eta_t,
+\label{eq:langevin}
+\end{equation}
+where $f(x,t)$ is a drift field, $D = k_B T / \gamma$ is a diffusion coefficient, and $\eta_t$ is Gaussian white noise~\citep{seifert2012}. The probability density $p(x,t)$ satisfies the Fokker--Planck equation
+\begin{equation}
+\partial_t p(x,t) = -\nabla_x \cdot (f p) + D \nabla_x^2 p.
+\end{equation}
+
+\subsection{Dimensional projection and induced distributions}
+
+A dimensional reduction is defined by a map
+\begin{equation}
+\Phi: \mathbb{R}^{D_\mathrm{in}} \to \mathbb{R}^{D_\mathrm{out}},\qquad D_\mathrm{out} < D_\mathrm{in},
+\end{equation}
+with $y = \Phi(x)$. The induced distribution on the low-dimensional space is
+\begin{equation}
+p_t(y) = \int_{\Phi^{-1}(y)} p_t(x)\, dx.
+\end{equation}
+Maintaining a stable $p_t(y)$ requires suppressing fluctuations orthogonal to the image manifold $\Phi(\mathbb{R}^{D_\mathrm{in}})$, which entails nonzero work even if no bits are erased.
+
+\subsection{Lifting operator and contraction cost}
+
+We define a lifting operator
+\begin{equation}
+\Phi^\dagger: \mathcal{P}(\mathbb{R}^{D_\mathrm{out}}) \to \mathcal{P}(\mathbb{R}^{D_\mathrm{in}}),
+\end{equation}
+such that $(\Phi\circ\Phi^\dagger)p(y) = p(y)$. We introduce the \emph{dimensional contraction cost}
+\begin{equation}
+C_\Phi = D_{\mathrm{KL}}\big(p_\tau(x)\,\Vert\,\Phi^\dagger p_\tau(y)\big),
+\label{eq:Cphi}
+\end{equation}
+which measures the information about high-dimensional microstructure destroyed by the projection.
+
+Operationally, $C_\Phi$ can be related to the local contraction of volume elements under $\Phi$. Let $J_\Phi(x)$ denote the Jacobian of $\Phi$ at $x$, and consider the induced metric on the image manifold
+\[
+G(x) = J_\Phi(x) J_\Phi(x)^\top.
+\]
+Then the local log-volume contraction is given by $\log \Lambda(x) = \tfrac{1}{2}\log \det G(x)$, and for smooth projections with slowly varying curvature, the contraction cost admits the approximation
+\begin{equation}
+C_\Phi \;\approx\; \Big\langle \log \det\big(J_\Phi(x) J_\Phi(x)^\top\big)^{1/2} \Big\rangle_{p_\tau(x)}.
+\end{equation}
+In this sense, the dimensional work term $k_B T C_\Phi$ is controlled by the average log-determinant of the metric tensor induced by the projection: projections with stronger volume contraction or higher curvature incur larger geometric cost.
+
+\subsection{The Dimensional Landauer Bound}
+
+From stochastic thermodynamic inequalities relating work to KL divergence~\citep{seifert2012,chen2021}, we have
+\begin{equation}
+W_{\min} \ge k_B T\, D_{\mathrm{KL}}\big(p_\tau(x)\,\Vert\,\Phi^\dagger p_\tau(y)\big).
+\end{equation}
+Decomposing into logical and geometric parts:
+\begin{equation}
+\boxed{
+W_{\min} \ge k_B T \ln 2\, \Delta I + k_B T\, C_\Phi.
+}
+\label{eq:dim_landauer_box}
+\end{equation}
+We refer to $k_B T C_\Phi$ as the \emph{dimensional work}.
+
+Moreover, under a distortion constraint $\mathbb{E}[d(X,Y)]\le\varepsilon$ for representing $X$ by $Y=\Phi(X)$, rate--distortion theory~\citep{cover2006} implies
+\begin{equation}
+C_\Phi \ge R_\varepsilon(X\to Y) - \Delta I,
+\end{equation}
+and therefore
+\begin{equation}
+W_{\min} \ge k_B T\, R_\varepsilon(X\to Y).
+\end{equation}
+This identifies a thermodynamic cost of representational fidelity independent of bit erasure.
+
+%------------------------------------------------------------------------------
+\section{Numerical Demonstrations}
+%------------------------------------------------------------------------------
+
+We present four simulations illustrating the necessity of dimensional work.
+
+\subsection{Curvature increases control cost}
+
+We simulated 2D Brownian motion constrained to 1D manifolds of varying curvature (Figure~\ref{fig:curvature}). While the logical variable is identical (1D position), the control work required to confine the trajectory scales monotonically with the curvature of the embedding, confirming the geometric nature of $W_{\mathrm{dim}}$.
+
+The control potential $U_{\mathrm{ctrl}}(x) = \tfrac{k}{2}[x_2 - f(x_1)]^2$ penalizes deviations from the prescribed 1D manifold $x_2 = f(x_1)$. To compute work in a thermodynamically consistent way, we employ the Stratonovich midpoint convention, evaluating the force at the midpoint of each step.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{figures/fig1_curvature.pdf}
+\caption{\textbf{Geometric cost of curvature.} Control work required to confine 2D Brownian motion to 1D manifolds of increasing curvature. Higher curvature requires more dimensional work, even when the logical dimensionality is identical.}
+\label{fig:curvature}
+\end{figure}
+
+\subsection{Coherence reduces dimensional work}
+
+Using a Kuramoto model~\citep{acebron2005}, we forced a high-dimensional oscillator population to drive a low-dimensional readout (Figure~\ref{fig:kuramoto}). We found that as the system enters a coherent phase (increasing order parameter $r$), the control work required to maintain readout fidelity drops sharply. Coherence effectively lowers $D_{\mathrm{in}}$, reducing the contraction cost.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{figures/fig2_kuramoto.pdf}
+\caption{\textbf{Coherence reduces dimensional work.} As coupling strength $K$ increases, the Kuramoto order parameter $r$ rises (green), indicating greater coherence. Simultaneously, the control work required to maintain a low-dimensional readout decreases (blue). Coherence reduces effective dimensionality, lowering $W_{\mathrm{dim}}$.}
+\label{fig:kuramoto}
+\end{figure}
+
+\subsection{The thermodynamic cost of over-compression}
+
+We trained an autoencoder on synthetic data with intrinsic dimension $d=2$. Stochastic gradient descent (SGD) can be interpreted as an overdamped Langevin process in parameter space, where the loss function $\mathcal{L}(\theta)$ plays the role of an energy potential~\citep{mandt2017}. Accordingly, we report the cumulative gradient norm during training as a proxy for thermodynamic work.
+
+As the bottleneck dimension $d_b$ was reduced below 2, the training effort (cumulative gradient norm) exploded (Figure~\ref{fig:autoencoder}). This illustrates the infinite work barrier when $D_{\mathrm{out}} < D_{\mathrm{intrinsic}}$.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\textwidth]{figures/fig3_autoencoder.pdf}
+\caption{\textbf{The cost of over-compression.} Reconstruction error (black) and cumulative gradient norm (red, a proxy for SGD work) as a function of bottleneck dimension. Below the intrinsic dimension (dashed line), training effort explodes---a signature of crossing the dimensional validity bound.}
+\label{fig:autoencoder}
+\end{figure}
+
+\subsection{Ephaptic coupling as a dimensional strategy}
+
+In a neural sheet model with local synaptic and global ephaptic coupling~\citep{anastassiou2011}, we required the network to maintain a low-dimensional readout near a target trajectory (Figure~\ref{fig:ephaptic}).
+
+To rule out the possibility that the ephaptic field merely provides an external energy source, we implemented a ``Random Field'' control condition. In this condition, the field magnitude was matched instantaneously to the coherent case ($|E| = |\bar{V}|$), but the sign was randomized at each time step, destroying the geometric alignment with the population vector.
+
+We found that only the coherent ephaptic field (proportional to the mean voltage) both reduced the participation ratio (effective dimensionality) and decreased control work. The random-field condition showed no systematic reduction in effective dimensionality and only modest or inconsistent changes in control work. This supports the interpretation that reduced dimensional work arises from alignment of the population vector and dimensionality reduction, rather than from a generic extra source of drive.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.75\textwidth]{figures/fig4_ephaptic.pdf}
+\caption{\textbf{Ephaptic coherence vs dimensional work.} Three conditions: no ephaptic coupling, energy-matched random field, and coherent ephaptic field. Only coherent coupling reduces both control power (red) and effective dimensionality (blue). The energy-matched random control rules out a trivial energy-injection explanation.}
+\label{fig:ephaptic}
+\end{figure}
+
+%------------------------------------------------------------------------------
+\section{Discussion}
+%------------------------------------------------------------------------------
+
+Our results show that the thermodynamic cost of information processing is not fully captured by Landauer's bitwise bound. Whenever a physical system compresses high-dimensional dynamics into low-dimensional representations, it must perform additional geometric work to stabilize the projection manifold. This dimensional work depends on the dimensionality gap, curvature, and temporal coherence requirements of the representation.
+
+By framing computation as dimensional projection, we unify observations across physics, neuroscience, machine learning, and biology. Oscillations and coherence emerge as energetic strategies for minimizing geometric cost~\citep{buzsaki2006,fries2015}; quantum measurement becomes an instance of energetic projection~\citep{zurek2003}; deep network fragilities follow from over-compressed bottlenecks~\citep{shwartzziv2017}; and biological coordination mechanisms such as ephaptic fields acquire a clear thermodynamic role~\citep{anastassiou2011}.
+
+The connection to the Free Energy Principle~\citep{friston2010} is immediate: biological systems maintain themselves in nonequilibrium steady states by minimizing a variational free energy functional over a restricted family of recognition densities. This family is necessarily lower-dimensional than the full space of posteriors. Our results imply that biological inference engines must pay dimensional work to sustain low-dimensional generative models that approximate high-dimensional causes.
+
+We suggest that intelligence---biological or artificial---is best understood as a thermodynamic strategy for navigating high-dimensional dynamical systems while minimizing the geometric cost of generating usable low-dimensional codes. Systems that can recruit coherence, exploit structured noise, and shape their computational manifolds to minimize $W_{\mathrm{dim}}$ will compute more efficiently and robustly.
+
+This framework extends naturally to our previous work on dimensional validity bounds in clinical AI~\citep{todd2025}: when patient state dimensionality exceeds algorithmic tractability, the dimensional work required to maintain valid predictions exceeds practical limits, explaining the systematic failures of clinical decision support in complex, multimorbid patients.
+
+Future work should focus on experimental quantification of dimensional work in concrete systems, optimization of projection manifolds for minimal curvature, and design of coherence-based computing architectures that explicitly exploit the physics of dimensionality. The Dimensional Landauer Bound provides a foundation for these efforts, extending the thermodynamics of information from bits to geometry.
+
+%------------------------------------------------------------------------------
+\section*{Acknowledgements}
+%------------------------------------------------------------------------------
+
+The author thanks the Sydney Medical School for support and members of the Fulcher Lab at the University of Sydney for critical discussions that motivated a more rigorous treatment of dimensionality in the development of this work. Simulations were performed using Python and PyTorch.
+
+\bibliographystyle{apalike}
+\bibliography{references}
+
+\end{document}

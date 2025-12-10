@@ -1,0 +1,47 @@
+\documentclass[11pt]{letter}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\signature{Ian Todd\\Sydney Medical School\\University of Sydney\\itod2305@uni.sydney.edu.au}
+\address{Ian Todd\\Sydney Medical School\\University of Sydney\\Sydney, NSW 2006\\Australia}
+
+\begin{document}
+
+\begin{letter}{The Editors\\Physical Review X\\American Physical Society}
+
+\opening{Dear Editors,}
+
+I am pleased to submit our manuscript, ``The Dimensional Landauer Bound: Why Information Flow Requires Geometric Work,'' for consideration as a Research Article in \textit{Physical Review X}.
+
+\textbf{Summary.} Landauer's principle gave physics a profound insight: erasing one bit of information has a minimum energetic cost of $k_B T \ln 2$. This result anchors the thermodynamics of computation in logical irreversibility. However, modern physical and biological information-processing systems---brains, learning algorithms, and complex dynamical substrates---do not primarily operate on discrete bits. They operate on high-dimensional manifolds: continuous neural population states, field configurations, latent representations in machine learning, and quantum states in Hilbert space.
+
+In this work, we derive the ``missing half'' of Landauer's principle. While Landauer's bound describes the one-time cost of \textit{erasing} a bit, we identify the continuous metabolic cost of \textit{maintaining} a low-dimensional representation against the eroding force of noise---effectively the ``rent'' biology must pay for structure. Whenever a physical system compresses high-dimensional dynamics into a lower-dimensional representational channel, there is an unavoidable energetic cost that we call \textit{dimensional work}. This cost arises from geometric irreversibility, not logical irreversibility.
+
+\textbf{Main Result.} We derive a Dimensional Landauer Bound of the form
+\[
+W_{\min} \ge k_B T \ln 2\, \Delta I + k_B T\, C_\Phi,
+\]
+where $\Delta I$ is the classical Landauer term (bits erased) and $C_\Phi$ is a dimensional contraction cost defined via KL divergence and connected geometrically to the Jacobian of the projection. This leads to a physically transparent statement:
+\begin{itemize}
+\item Landauer's principle quantifies the cost of erasing bits.
+\item The Dimensional Landauer Bound quantifies the cost of representing information on a lower-dimensional manifold.
+\end{itemize}
+
+\textbf{Methods and Numerical Illustration.} Using stochastic thermodynamics, optimal control, and information geometry, we derive the bound in a general setting of high-dimensional Langevin dynamics subject to dimensional projection. We instantiate the bound numerically in four complementary settings:
+\begin{enumerate}
+\item 2D Brownian motion on curved 1D manifolds (geometric work scales with curvature);
+\item Kuramoto oscillators (coherence reduces control work for equivalent readout fidelity);
+\item Autoencoder training under SGD-as-Langevin (effort explosion below intrinsic dimensionality);
+\item Neural sheet with ephaptic coupling (energy-matched random vs.\ coherent fields isolates the geometric mechanism).
+\end{enumerate}
+
+\textbf{Why Physical Review X?} This manuscript sits at the intersection of statistical physics, information theory, and complex systems, with direct implications for neuroscience and machine learning---a scope aligned with PRX's mission to publish cross-cutting, high-impact physics. The Dimensional Landauer Bound provides a foundational extension of well-established thermodynamic principles into a domain---manifold-based computation and high-dimensional inference---that is increasingly central to modern physics and AI.
+
+To our knowledge, no prior work provides a unified, thermodynamically grounded treatment of the energetic cost of dimensional reduction across physical, biological, and artificial systems. We therefore believe this manuscript will be of broad interest to the PRX audience.
+
+We confirm that this manuscript has not been published and is not under consideration elsewhere. We have no conflicts of interest to declare.
+
+\closing{Sincerely,}
+
+\end{letter}
+\end{document}
