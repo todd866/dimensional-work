@@ -13,7 +13,7 @@
 \date{\today}
 
 \begin{abstract}
-Landauer's principle establishes the minimum energetic cost of erasing discrete information, linking logical irreversibility to heat dissipation. However, many physical and biological systems process information by projecting high-dimensional dynamics onto lower-dimensional continuous manifolds. Here, we extend Landauer's framework to quantify the thermodynamic cost of this dimensional reduction. Using stochastic thermodynamics, we derive a ``Dimensional Landauer Bound,'' $W_{\text{min}} \ge k_B T (\ln 2 \cdot \Delta I + C_\Phi)$, where $C_\Phi$ represents a geometric contraction cost determined by the Jacobian of the projection and the curvature of the target manifold. We show that maintaining a low-dimensional representation against thermal fluctuations requires continuous work proportional to this geometric complexity. We validate this bound analytically and via numerical simulations of Brownian motion on curved manifolds, coupled oscillators, and neural networks. Our results suggest that the Information Bottleneck in learning theory has a direct thermodynamic dual, where efficient computation requires minimizing the geometric work of dimensionality reduction.
+Landauer's principle establishes the minimum energetic cost of erasing discrete information, linking logical irreversibility to heat dissipation. However, many physical and biological systems process information by projecting high-dimensional dynamics onto lower-dimensional continuous manifolds. Here, we extend Landauer's framework to quantify the thermodynamic cost of this dimensional reduction. Using stochastic thermodynamics, we derive a ``Dimensional Landauer Bound,'' $W_{\text{min}} \ge k_B T (\ln 2 \cdot \Delta I + C_\Phi)$, where $C_\Phi$ is a dimensionless geometric contraction cost determined by the Jacobian of the projection and the curvature of the target manifold. We distinguish the \textit{formation work} to create a low-dimensional representation from the \textit{maintenance power} required to sustain it against thermal noise. Numerical simulations of Brownian motion on curved manifolds, coupled Kuramoto oscillators, and autoencoder networks validate the bound and demonstrate that coherent dynamics reduce geometric work by aligning intrinsic manifolds with target projections. These results establish a thermodynamic dual to the Information Bottleneck, where efficient computation requires minimizing the geometric work of dimensionality reduction.
 \end{abstract}
 
 \maketitle
@@ -62,16 +62,20 @@ Standard Landauer erasure focuses on the entropic change due to the contraction 
 
 Consider a projection process taking the system from an initial distribution $p_0(x)$ on $\mathbb{R}^{D_{\text{in}}}$ to a final projected distribution $p_\tau(y)$ on $\mathbb{R}^{D_{\text{out}}}$ (or a tight neighborhood thereof). The thermodynamic cost is bounded by the Kullback-Leibler divergence between the initial state and the ``lifted'' final state:
 \begin{equation}
-    \beta W \ge D_{\text{KL}}(p_0(x) || \Phi^\dagger p_\tau(y)) + \beta \Delta \mathcal{F}_{\text{eq}},
+    \beta W \ge D_{\text{KL}}(p_0(x) \| \Phi^\dagger p_\tau(y)) + \beta \Delta \mathcal{F}_{\text{eq}},
 \end{equation}
-where $\Phi^\dagger$ is the adjoint operator representing the maximum entropy lifting of the projected distribution back into the high-dimensional space. Decomposing the relative entropy reveals two distinct contributions: a logical term related to the Shannon information of the macroscopic states, and a geometric term arising from the volume contraction of the microstates.
+where $\Phi^\dagger$ is the adjoint operator representing the maximum entropy lifting of the projected distribution back into the high-dimensional space.
 
-We derive the \textbf{Dimensional Landauer Bound}:
+To decompose this KL divergence, we apply the change-of-variables formula. For a smooth projection $\Phi$ with Jacobian $J_\Phi$, the relative entropy separates into:
 \begin{equation}
-    \boxed{W_{\text{min}} \ge k_B T \ln 2 \cdot \Delta I + k_B T \, C_\Phi,}
+    D_{\text{KL}}(p_0 \| \Phi^\dagger p_\tau) = \Delta I \cdot \ln 2 + C_\Phi,
+\end{equation}
+where the first term captures the change in Shannon information of the macroscopic states (in nats, converted from bits), and the second is a geometric term arising from volume contraction. Substituting this decomposition yields the \textbf{Dimensional Landauer Bound}:
+\begin{equation}
+    \boxed{W_{\text{min}} \ge k_B T (\ln 2 \cdot \Delta I + C_\Phi),}
     \label{eq:dim_landauer}
 \end{equation}
-where $\Delta I$ represents the classical information-theoretic erasure (in bits), and $C_\Phi$ is the \textit{dimensional contraction cost}.
+where $\Delta I$ represents the classical information-theoretic erasure (in bits), and $C_\Phi$ is the \textit{dimensionless geometric contraction cost}.
 
 \subsection{Geometric interpretation of $C_\Phi$}
 
@@ -89,7 +93,9 @@ While the mathematical origin of $C_\Phi$ is a Jacobian transformation, its phys
 
 Crucially, $C_\Phi$ depends on physical properties of the constraint, not just the choice of coordinates. If the target manifold is curved, the Jacobian varies with position, and the cost includes a curvature penalty. Specifically, confining fluctuations to a manifold with principal curvatures $\kappa_i$ introduces an additional work term scaling as $\sim \sum \kappa_i^2 \sigma_\perp^2$, where $\sigma_\perp^2$ is the variance of the constrained fluctuations. This curvature dependence (validated in Fig.~\ref{fig:curvature}) confirms that $C_\Phi$ represents genuine energy dissipation, not a coordinate transformation.
 
-Thus, the maintenance of a low-dimensional representation requires continuous power dissipation to counteract the entropic pressure of the excluded dimensions. This ``maintenance power'' is the non-equilibrium steady state (NESS) analog to the formation work defined in Eq.~(\ref{eq:geometric_cost}).
+Thus, the maintenance of a low-dimensional representation requires continuous power dissipation to counteract the entropic pressure of the excluded dimensions.
+
+We distinguish two regimes. Equations~(\ref{eq:dim_landauer})--(\ref{eq:geometric_cost}) bound the \textit{formation work} (Joules)---the one-time thermodynamic cost to create a low-dimensional state via a quasistatic protocol. In the simulations below, we instead measure the \textit{maintenance power} $P_{\text{maint}} = \langle W_{\text{ctrl}} \rangle / T$ (Watts)---the continuous dissipation required to sustain a low-dimensional representation in non-equilibrium steady state (NESS). Both quantities scale with $C_\Phi$; the maintenance power is the NESS analog of the formation work.
 
 %------------------------------------------------------------------------------
 \section{Applications to Model Systems}
@@ -103,7 +109,9 @@ In each case, we measured the \textit{maintenance power} $P_{\text{maint}}$---th
 
 We first considered the fundamental case of a 2D particle confined to a 1D manifold embedded in $\mathbb{R}^2$. The system evolved under overdamped Langevin dynamics (Eq.~\ref{eq:langevin}) subject to a stiff harmonic potential $U(x) = \frac{k}{2}(x_2 - f(x_1))^2$ that enforces the projection onto the curve $x_2 = f(x_1)$.
 
-Using Stratonovich integration to ensure thermodynamic consistency, we measured the control work required to maintain this confinement. As predicted by Eq.~(\ref{eq:geometric_cost}), the maintenance power was found to scale monotonically with the curvature of the manifold (Fig.~\ref{fig:curvature}). For a manifold with local curvature $\kappa(x)$, the effective entropic potential creates a repulsive force perpendicular to the curve. Counteracting this force to maintain the projection requires a continuous injection of work, $W_{\text{ctrl}} \propto \langle \kappa^2 \rangle$. This confirms that geometric nonlinearity imposes a direct energetic cost, even when the logical dimensionality ($D_{\text{out}}=1$) remains constant.
+We simulated trajectories using Stratonovich integration (midpoint evaluation of control forces) with parameters: $T = 5$~a.u., $\Delta t = 10^{-3}$, diffusion coefficient $D = 0.1$, confinement stiffness $k = 10$, averaged over 10 trials per condition. Three manifold geometries were compared: linear ($A=0$), mild curvature ($A=0.5$, $B=1.0$), and high curvature ($A=1.0$, $B=2.0$), where $f(x_1) = A \sin(B x_1)$.
+
+As predicted by Eq.~(\ref{eq:geometric_cost}), the maintenance power scaled monotonically with manifold curvature (Fig.~\ref{fig:curvature}). For a manifold with local curvature $\kappa(x)$, the effective entropic potential creates a repulsive force perpendicular to the curve. Counteracting this force to maintain the projection requires a continuous injection of work, $W_{\text{ctrl}} \propto \langle \kappa^2 \rangle$. This confirms that geometric nonlinearity imposes a direct energetic cost, even when the logical dimensionality ($D_{\text{out}}=1$) remains constant.
 
 \begin{figure}[h]
 \centering
@@ -114,9 +122,13 @@ Using Stratonovich integration to ensure thermodynamic consistency, we measured 
 
 \subsection{Collective dynamics and effective dimensionality}
 
-In biological and physical networks, dimensionality reduction is often achieved via collective synchronization. We modeled this using a population of $N$ coupled Kuramoto oscillators driving a low-dimensional readout (Fig.~\ref{fig:kuramoto}). The system's effective dimensionality was quantified by the participation ratio of the covariance matrix eigenvalues.
+In biological and physical networks, dimensionality reduction is often achieved via collective synchronization. We modeled this using a population of $N=64$ coupled Kuramoto oscillators driving a low-dimensional readout (Fig.~\ref{fig:kuramoto}). Oscillator phases $\theta_i$ evolved as:
+\begin{equation}
+    \dot{\theta}_i = \omega_i + \frac{K}{N}\sum_j \sin(\theta_j - \theta_i) + u_i + \xi_i,
+\end{equation}
+where $\omega_i \sim \mathcal{N}(0, 0.5)$ are natural frequencies, $K$ is the coupling strength, $u_i = -\alpha(y - y^*)\sin(\psi - \theta_i)$ is a control force that projects the collective phase $\psi$ toward a target $y^* = 0$, and $\xi_i$ is Gaussian noise with $D = 0.01$. The system's effective dimensionality was quantified by the participation ratio $\text{PR} = (\sum_i \lambda_i)^2 / \sum_i \lambda_i^2$, where $\lambda_i$ are eigenvalues of the phase covariance matrix (simulations: $T = 50$, $\Delta t = 0.01$, $\alpha = 1.0$).
 
-We observed a regime shift as the coupling strength $K$ increased. In the incoherent phase ($r \approx 0$), the high effective dimensionality required substantial control work to project onto a 1D macroscopic state. However, as the system entered the coherent phase ($r \to 1$), the effective dimensionality $D_{\text{eff}}$ collapsed. This spontaneous dimensional reduction aligned the system's intrinsic manifold with the target projection, minimizing the orthogonal fluctuations. Consequently, the control power $P_{\text{maint}}$ decreased sharply as coherence emerged. This result suggests that synchronization functions thermodynamically as a ``pre-computation'' that lowers the geometric cost $C_\Phi$ of downstream readout.
+We observed a regime shift as coupling strength increased. In the incoherent phase ($r \approx 0$), high effective dimensionality required substantial control work to project onto a 1D macroscopic state. However, as the system entered the coherent phase ($r \to 1$), the effective dimensionality collapsed. This spontaneous dimensional reduction aligned the system's intrinsic manifold with the target projection, minimizing orthogonal fluctuations. Consequently, control power $P_{\text{maint}}$ decreased sharply as coherence emerged. This result suggests that synchronization functions thermodynamically as a ``pre-computation'' that lowers the geometric cost $C_\Phi$ of downstream readout.
 
 \begin{figure}[h]
 \centering
@@ -127,9 +139,9 @@ We observed a regime shift as the coupling strength $K$ increased. In the incohe
 
 \subsection{Thermodynamic divergence at the Information Bottleneck}
 
-To test the bound in a high-dimensional learning context, we analyzed the training of autoencoders under the established equivalence between Stochastic Gradient Descent (SGD) and overdamped Langevin dynamics~\cite{mandt2017}. In this framework, minibatch noise acts as an effective thermal bath, and the loss landscape $\mathcal{L}(\theta)$ serves as an energy potential in parameter space. The cumulative gradient norm then provides a thermodynamic proxy for the work performed during optimization.
+To test the bound in a high-dimensional learning context, we analyzed the training of autoencoders under the established equivalence between Stochastic Gradient Descent (SGD) and overdamped Langevin dynamics~\cite{mandt2017}. In this framework, minibatch noise acts as an effective thermal bath, and the loss landscape $\mathcal{L}(\theta)$ serves as an energy potential in parameter space. The cumulative gradient norm then provides a thermodynamic proxy for the work performed during optimization. (Strictly, the Langevin approximation holds for small learning rates and stationary data distributions; here we use it as a qualitative proxy rather than a quantitative equality.)
 
-We trained networks to compress data with a known intrinsic dimension $d_{\text{intrinsic}}=2$ through bottlenecks of varying width $d_b$. We observed a sharp divergence in the cumulative gradient norm when $d_b < d_{\text{intrinsic}}$ (Fig.~\ref{fig:autoencoder}). This divergence is not simply a failure to converge; it represents a divergence in the \textit{work} required to explore the loss landscape---formally analogous to the divergent work required to compress a gas to vanishing volume. The transition at $d_b = d_{\text{intrinsic}}$ exhibits the hallmarks of a thermodynamic phase transition: a qualitative change in scaling behavior at a critical parameter value.
+We trained autoencoders (input dimension 10, hidden layer 32 with ReLU activation, bottleneck dimension $d_b$, Adam optimizer with learning rate $10^{-3}$, 50 epochs, 5 random seeds per condition) to compress synthetic data lying on a 2D manifold embedded in $\mathbb{R}^{10}$ ($d_{\text{intrinsic}}=2$). We observed a sharp divergence in the cumulative gradient norm when $d_b < d_{\text{intrinsic}}$ (Fig.~\ref{fig:autoencoder}). This divergence is not simply a failure to converge; it represents a divergence in the \textit{work} required to explore the loss landscape---formally analogous to the divergent work required to compress a gas to vanishing volume. The transition at $d_b = d_{\text{intrinsic}}$ exhibits the hallmarks of a thermodynamic phase transition: a qualitative change in scaling behavior at a critical parameter value.
 
 This result is consistent with the Information Bottleneck principle~\cite{tishby2000} but adds a physical constraint: representations that over-compress topology are not just informationally lossy, they are energetically prohibited in any physical implementation.
 
