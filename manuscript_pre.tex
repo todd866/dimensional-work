@@ -84,7 +84,10 @@ The dimensional work is the thermodynamic cost of suppressing fluctuations in th
     C_\Phi = -\frac{1}{2} \left\langle \ln \det (J_\Phi(x) J_\Phi(x)^\top) \right\rangle_{p(x)}.
     \label{eq:geometric_cost}
 \end{equation}
-This term captures the geometric irreversibility of the process. If the target manifold is curved, the Jacobian varies with $x$, and the cost includes a curvature penalty. Specifically, confining fluctuations to a manifold with principal curvatures $\kappa_i$ introduces an additional work term scaling as $\sim \sum \kappa_i^2 \sigma_\perp^2$, where $\sigma_\perp^2$ is the variance of the constrained fluctuations.
+
+While the mathematical origin of $C_\Phi$ is a Jacobian transformation, its physical interpretation distinguishes it from a mere coordinate artifact. Standard Landauer erasure quantifies the cost of changing the \textit{state} within a fixed configuration space. The geometric term $C_\Phi$ instead quantifies the cost of \textit{constraining the configuration space itself}---suppressing fluctuations orthogonal to the target manifold. This constraint requires continuous heat dissipation to the bath, as thermal fluctuations persistently attempt to explore the forbidden dimensions.
+
+Crucially, $C_\Phi$ depends on physical properties of the constraint, not just the choice of coordinates. If the target manifold is curved, the Jacobian varies with position, and the cost includes a curvature penalty. Specifically, confining fluctuations to a manifold with principal curvatures $\kappa_i$ introduces an additional work term scaling as $\sim \sum \kappa_i^2 \sigma_\perp^2$, where $\sigma_\perp^2$ is the variance of the constrained fluctuations. This curvature dependence (validated in Fig.~\ref{fig:curvature}) confirms that $C_\Phi$ represents genuine energy dissipation, not a coordinate transformation.
 
 Thus, the maintenance of a low-dimensional representation requires continuous power dissipation to counteract the entropic pressure of the excluded dimensions. This ``maintenance power'' is the non-equilibrium steady state (NESS) analog to the formation work defined in Eq.~(\ref{eq:geometric_cost}).
 
@@ -92,7 +95,9 @@ Thus, the maintenance of a low-dimensional representation requires continuous po
 \section{Applications to Model Systems}
 %------------------------------------------------------------------------------
 
-To validate the Dimensional Landauer Bound, we examined four complementary stochastic systems. In each case, we measured the \textit{maintenance power} $P_{\text{maint}}$---the continuous work required to sustain a low-dimensional representation against thermal fluctuations---and compared it to the geometric complexity $C_\Phi$ of the projection.
+To validate the Dimensional Landauer Bound, we examined four complementary stochastic systems. These minimal models---Brownian motion, coupled oscillators, neural networks---were chosen deliberately to isolate the geometric contribution to entropy production, unconfounded by the metabolic and biochemical complexities of real biological systems. Our goal is not to model specific biological circuitry, but to establish fundamental thermodynamic bounds that any physical implementation of dimensional reduction must respect. These bounds provide lower limits on the efficiency achievable by realistic systems.
+
+In each case, we measured the \textit{maintenance power} $P_{\text{maint}}$---the continuous work required to sustain a low-dimensional representation against thermal fluctuations---and compared it to the geometric complexity $C_\Phi$ of the projection.
 
 \subsection{Geometric cost of curvature}
 
@@ -122,9 +127,11 @@ We observed a regime shift as the coupling strength $K$ increased. In the incohe
 
 \subsection{Thermodynamic divergence at the Information Bottleneck}
 
-To test the bound in a high-dimensional learning context, we analyzed the training of autoencoders, interpreting Stochastic Gradient Descent (SGD) as a discretized Langevin process~\cite{mandt2017}. We trained networks to compress data with a known intrinsic dimension $d_{\text{intrinsic}}=2$ through bottlenecks of varying width $d_b$.
+To test the bound in a high-dimensional learning context, we analyzed the training of autoencoders under the established equivalence between Stochastic Gradient Descent (SGD) and overdamped Langevin dynamics~\cite{mandt2017}. In this framework, minibatch noise acts as an effective thermal bath, and the loss landscape $\mathcal{L}(\theta)$ serves as an energy potential in parameter space. The cumulative gradient norm then provides a thermodynamic proxy for the work performed during optimization.
 
-The cumulative gradient norm of the loss function served as a proxy for the thermodynamic work performed by the optimizer. We observed a sharp divergence in this work term when $d_b < d_{\text{intrinsic}}$ (Fig.~\ref{fig:autoencoder}). This ``effort explosion'' implies a thermodynamic phase transition where the geometric cost $C_\Phi \to \infty$ as the projection becomes topologically forbidden. This is consistent with the Information Bottleneck principle~\cite{tishby2000} but adds a physical constraint: representations that over-compress topology are not just informationally lossy, they are energetically prohibited.
+We trained networks to compress data with a known intrinsic dimension $d_{\text{intrinsic}}=2$ through bottlenecks of varying width $d_b$. We observed a sharp divergence in the cumulative gradient norm when $d_b < d_{\text{intrinsic}}$ (Fig.~\ref{fig:autoencoder}). This divergence is not simply a failure to converge; it represents a divergence in the \textit{work} required to explore the loss landscape---formally analogous to the divergent work required to compress a gas to vanishing volume. The transition at $d_b = d_{\text{intrinsic}}$ exhibits the hallmarks of a thermodynamic phase transition: a qualitative change in scaling behavior at a critical parameter value.
+
+This result is consistent with the Information Bottleneck principle~\cite{tishby2000} but adds a physical constraint: representations that over-compress topology are not just informationally lossy, they are energetically prohibited in any physical implementation.
 
 \begin{figure}[h]
 \centering
