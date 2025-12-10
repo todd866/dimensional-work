@@ -1,10 +1,9 @@
-# The Dimensional Landauer Bound
+# Thermodynamic Costs of Dimensional Reduction
 
-**Formation Cost vs Maintenance Power in Thermodynamic Computing**
+**Extending Landauer's Principle to Geometric Compression**
 
-> **Journal:** Physical Review X
-> **Status:** Under Review (Manuscript ID: es2025dec06_550)
-> **Submitted:** December 6, 2025
+> **Target:** Physical Review E
+> **Status:** Ready to submit (pivoted from PRX desk rejection Dec 10, 2025)
 
 ## Abstract
 
@@ -12,77 +11,75 @@ Landauer's principle establishes a minimum energetic cost for logically irrevers
 
 $$W_{\min} \geq k_B T \ln 2 \cdot \Delta I + k_B T \cdot C_\Phi$$
 
-where $C_\Phi = D_{\mathrm{KL}}(p(x) \| \Phi^\dagger p(y))$ is the **geometric contraction cost**---the information destroyed by projecting high-dimensional dynamics onto a lower-dimensional manifold.
+where $C_\Phi$ is the **geometric contraction cost**—the information destroyed by projecting high-dimensional dynamics onto a lower-dimensional manifold, governed by the Jacobian of the projection.
 
 ## Key Result: Formation vs Maintenance
 
 The Dimensional Landauer Bound distinguishes:
 
-- **Formation cost** ($W_{\mathrm{dim}}$, Joules): One-time "deposit" to create a low-dimensional representation
-- **Maintenance power** ($P_{\mathrm{maint}}$, Watts): Continuous "rent" to sustain the representation against thermal noise
+- **Formation cost** ($W_{\mathrm{dim}}$, Joules): One-time cost to create a low-dimensional representation
+- **Maintenance power** ($P_{\mathrm{maint}}$, Watts): Continuous dissipation to sustain the representation against thermal noise
 
-This formation/maintenance distinction:
+This framework:
+- Connects to the Information Bottleneck (Tishby et al.) as its thermodynamic dual
 - Explains why biological systems favour oscillatory, coherent dynamics
 - Provides thermodynamic foundation for analog vs digital computing tradeoffs
-- Connects to surface tension (formation cost for interfaces) and black hole thermodynamics (Bekenstein-Hawking as formation cost, Hawking radiation as maintenance)
 
 ## Repository Structure
 
 ```
-dimensional-landauer-bound/
-├── manuscript_prx.tex/pdf      # Main manuscript
-├── supplementary.tex/pdf       # Supplementary material with derivations
+dimensional-work/
+├── manuscript_pre.tex/pdf      # PRE submission manuscript
+├── cover_letter_pre.tex/pdf    # PRE cover letter
 ├── references.bib              # Bibliography
 ├── code/
-│   ├── run_all_sims.py                  # Master script
-│   ├── sim1_brownian_manifolds.py       # Curvature vs work
-│   ├── sim1_brownian_manifolds_validated.py  # With validation
-│   ├── sim1_compression_protocol.py     # Compression protocol demo
-│   ├── sim2_kuramoto.py                 # Coherence vs work
-│   ├── sim3_autoencoder.py              # Bottleneck vs effort
-│   └── sim4_ephaptic_sheet.py           # Ephaptic coupling
-└── figures/                    # Generated figures (PDF + PNG)
+│   └── simulations.py          # All simulations (consolidated)
+├── figures/                    # Generated figures (PDF + PNG)
+├── paper2/                     # "Dimensional Work of Surfaces" (PRE)
+├── paper3/                     # "Dimensional Work of Black Holes" (PRD)
+└── archive/                    # PRX submission + old code files
 ```
 
 ## Numerical Demonstrations
 
-### 1. Curvature Increases Control Cost
-2D Brownian motion constrained to curved 1D manifolds shows geometric work scales with curvature.
-
-### 2. Coherence Reduces Dimensional Work
-Kuramoto oscillators demonstrate that higher phase coherence reduces control work for the same readout fidelity.
-
-### 3. The Thermodynamic Cost of Over-Compression
-Autoencoder training (SGD-as-Langevin) shows effort explosion below intrinsic dimensionality.
-
-### 4. Ephaptic Coupling as a Dimensional Strategy
-Neural sheet with energy-matched random vs coherent fields proves that geometric alignment (not just energy) reduces work.
-
-## Running Simulations
-
+Run all simulations:
 ```bash
 cd code
-python run_all_sims.py
+python simulations.py
 ```
 
-Generates all figures in `figures/`.
+Or run individual simulations:
+```bash
+python simulations.py concept      # Concept figure
+python simulations.py curvature    # Brownian manifolds
+python simulations.py kuramoto     # Coherence vs work
+python simulations.py autoencoder  # Bottleneck divergence
+python simulations.py ephaptic     # Neural sheet coupling
+```
+
+## Submission History
+
+| Date | Journal | Outcome |
+|------|---------|---------|
+| Dec 6, 2025 | PRX | Submitted (XM10873) |
+| Dec 10, 2025 | PRX | Desk reject |
+| TBD | PRE | Ready to submit |
 
 ## Requirements
 
 - Python 3.10+
-- NumPy
-- PyTorch
-- Matplotlib
+- NumPy, SciPy, Matplotlib
+- PyTorch (for autoencoder simulation)
 
 ## Citation
 
 ```bibtex
 @article{todd2025dimensional,
   author  = {Todd, Ian},
-  title   = {The Dimensional Landauer Bound: Formation Cost vs Maintenance Power in Thermodynamic Computing},
-  journal = {Physical Review X},
+  title   = {Thermodynamic costs of dimensional reduction in stochastic dynamics},
+  journal = {Physical Review E},
   year    = {2025},
-  note    = {Under review, Manuscript ID: es2025dec06\_550}
+  note    = {In preparation}
 }
 ```
 
@@ -90,7 +87,7 @@ Generates all figures in `figures/`.
 
 - Todd I. (2025). The limits of falsifiability. *BioSystems*, 258, 105608.
 - Todd I. (2025). Timing inaccessibility and the projection bound. *BioSystems*, 258, 105632.
-- Landauer R. (1961). Irreversibility and heat generation. *IBM JRD*, 5(3), 183-191.
+- Tishby N. et al. (2000). The information bottleneck method.
 - Seifert U. (2012). Stochastic thermodynamics. *Rep. Prog. Phys.*, 75, 126001.
 
 ## License
