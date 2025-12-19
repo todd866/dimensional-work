@@ -125,6 +125,12 @@ In the simulations below, we measure maintenance power via the control force mag
 
 To test the Dimensional Landauer Bound, we examined four complementary stochastic systems designed to isolate the geometric contribution to entropy production. In each case, we measure proxies for thermodynamic work (control force magnitude, gradient norms, variance) and verify that they scale monotonically with the geometric cost $C_{\Phi}$ or its determinants (curvature, effective dimension).
 
+Following the distinction introduced in Section 2.3, our simulations separate into two regimes:
+\begin{itemize}
+    \item \textbf{Maintenance Power} (Sections 3.1, 3.2, 3.4): The system is already confined to a manifold; we measure the continuous work to sustain it there (curvature cost) or the work \textit{saved} by spontaneous self-organization (Kuramoto, ephaptic).
+    \item \textbf{Formation Work} (Section 3.3): The autoencoder simulation captures the one-time cost of \textit{finding} the manifold during optimization, where the divergence at the intrinsic dimension reflects the work to compress the representation.
+\end{itemize}
+
 \subsection{Geometric Cost of Curvature}
 We first considered the fundamental case of a 2D particle confined to a 1D manifold embedded in $\mathbb{R}^2$. The system evolved under overdamped Langevin dynamics subject to a stiff harmonic potential $U(x) = \frac{k}{2}(x_2 - f(x_1))^2$ that enforces the projection onto the curve $x_2 = f(x_1)$.
 
@@ -147,7 +153,7 @@ Crucially, this transition represents a collapse of the \textbf{effective dimens
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{figures/fig2_kuramoto.pdf}
-\caption{\textbf{Synchronization transition reduces geometric work.} (A) Order parameter $r$ as a function of coupling strength $K$ for $N=64$ Kuramoto oscillators, showing the synchronization crossover near $K_c \approx 2$. (B) Control power $P_{\text{maint}}$ (a dissipation proxy) decreases exponentially with coherence, demonstrating that collective synchronization spontaneously reduces the geometric work required for dimensional readout.}
+\caption{\textbf{Synchronization transition reduces geometric work.} (A) Order parameter $r$ as a function of coupling strength $K$ for $N=64$ Kuramoto oscillators, showing the synchronization crossover near $K_c \approx 2$. (B) Control power $P_{\text{maint}}$ decreases exponentially with coherence. Here, $P_{\text{maint}}$ proxies the \textit{external} work required to enforce the readout constraint: as the system self-organizes, the internal coupling performs the compression, reducing the burden on an external controller (Maxwell's Demon) attempting to track the macroscopic state.}
 \label{fig:kuramoto}
 \end{figure}
 
