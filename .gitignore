@@ -1,0 +1,24 @@
+# Private - never commit
+CLAUDE.md
+WORKFLOW.md
+archive/
+cover_letter*.tex
+cover_letter*.pdf
+PROJECT_STATUS.md
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
