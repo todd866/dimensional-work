@@ -1,11 +1,7 @@
 Highlights
 
-- We derive the Dimensional Landauer Bound extending classical bit erasure to continuous dimensional reduction on strange attractors
-
-- The geometric cost C_Φ is governed by the Jacobian determinant and manifold curvature, linking effective dimension to thermodynamic work
-
-- Kuramoto oscillators exhibit a synchronization transition: coherence spontaneously reduces the geometric work of dimensional readout
-
-- Autoencoder training shows a sharp crossover with divergent work below the data's intrinsic dimension
-
-- Synergetic self-organization (Haken's slaving principle) provides a thermodynamic mechanism for efficient biological computation
+- Dimensional Landauer bound extends Landauer to continuous dimensional reduction.
+- Geometric cost C_Φ depends on the projection Jacobian and manifold curvature.
+- Curved-manifold confinement costs scale with mean-squared curvature ⟨κ²⟩.
+- Kuramoto synchronization lowers projection cost by collapsing effective dimension.
+- Autoencoder bottlenecks and field coupling show sharp cost crossovers and slaving.

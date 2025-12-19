@@ -3,7 +3,7 @@
 % Standard packages for rigorous math and physics
 \usepackage{amsmath, amssymb, amsfonts}
 \usepackage{graphicx}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage{geometry}
 \geometry{margin=1in}
 \usepackage{setspace}
@@ -28,7 +28,7 @@ Sydney, NSW 2006, Australia\\
 \maketitle
 
 \begin{abstract}
-Landauer's principle links logical irreversibility to heat dissipation, establishing a fundamental energy cost for discrete bit erasure. However, biological and physical information processing often involves continuous dimensional reduction---projecting high-dimensional dynamics onto lower-dimensional manifolds---rather than discrete logic. Here, we extend Landauer's framework to quantify the thermodynamic cost of this geometric compression. Using stochastic thermodynamics, we derive a ``Dimensional Landauer Bound,'' $W_{\text{min}} \ge k_B T (\ln 2 \cdot \Delta I + C_{\Phi})$, where $C_{\Phi}$ is a dimensionless geometric contraction cost governed by the Jacobian of the projection and the curvature of the target manifold. We distinguish the \textit{formation work} required to create a low-dimensional representation from the \textit{maintenance power} required to sustain it against thermal fluctuations. Numerical simulations of Brownian motion on curved manifolds, coupled Kuramoto oscillators, autoencoder networks, and ephaptic neural fields support the predicted geometric scaling. Crucially, we show that collective synchronization acts as a thermodynamic mechanism to minimize this cost: by collapsing the system's effective dimension, coherence aligns the intrinsic manifold with the target projection, reducing the geometric work of readout. These results establish a thermodynamic dual to the problem of Topological Aliasing, suggesting that efficient computation in complex systems requires minimizing the geometric work of dimensionality reduction.
+Landauer's principle links logical irreversibility to heat dissipation, establishing a fundamental energy cost for discrete bit erasure. However, biological and physical information processing often involves continuous dimensional reduction---projecting high-dimensional dynamics onto lower-dimensional manifolds---rather than discrete logic. Here, we extend Landauer's framework to quantify the thermodynamic cost of this geometric compression. Using stochastic thermodynamics, we derive a ``Dimensional Landauer Bound,'' $W_{\text{diss}} \ge k_B T (\ln 2 \cdot \Delta I + C_{\Phi})$, where $W_{\text{diss}}$ is the dissipated work (beyond free energy change) and $C_{\Phi}$ is a dimensionless geometric contraction cost governed by the Jacobian of the projection and the curvature of the target manifold. We distinguish the \textit{formation work} required to create a low-dimensional representation from the \textit{maintenance power} required to sustain it against thermal fluctuations. Numerical simulations of Brownian motion on curved manifolds, coupled Kuramoto oscillators, linear autoencoders, and ephaptic neural fields support the predicted geometric scaling. Crucially, we show that collective synchronization acts as a thermodynamic mechanism to minimize this cost: by collapsing the system's effective dimension, coherence aligns the intrinsic manifold with the target projection, reducing the geometric work of readout. These results establish a thermodynamic dual to the problem of Topological Aliasing, suggesting that efficient computation in complex systems requires minimizing the geometric work of dimensionality reduction.
 \end{abstract}
 
 \noindent\textbf{Keywords:} Stochastic thermodynamics, Dimensionality reduction, Landauer's principle, Information geometry, Effective dimension, Synchronization
@@ -47,7 +47,7 @@ In previous work, we quantified the \textit{inferential} cost of such projection
 
 In this work, we derive a thermodynamic bound on the work required to enforce dimensional reduction in overdamped Langevin systems. We identify a ``Dimensional Landauer Bound'' that extends the classical result to include a geometric term, $C_{\Phi}$, which quantifies the entropic cost of projecting dynamics through a dimensional bottleneck. We show that $C_{\Phi}$ is governed by the singular values of the projection Jacobian and the extrinsic curvature of the target manifold.
 
-We test these predictions across four model systems: Brownian motion on curved manifolds, coupled Kuramoto oscillators, autoencoders, and ephaptic neural fields. Our results support the predicted geometric scaling, demonstrating that the cost of maintaining a low-dimensional state increases with manifold curvature. Furthermore, we show that collective phenomena such as synchronization serve to minimize this geometric work by reducing the system's effective dimension prior to projection.
+We test these predictions across four model systems: Brownian motion on curved manifolds, coupled Kuramoto oscillators, linear autoencoders, and ephaptic neural fields. Our results support the predicted geometric scaling, demonstrating that the cost of maintaining a low-dimensional state increases with manifold curvature. Furthermore, we show that collective phenomena such as synchronization serve to minimize this geometric work by reducing the system's effective dimension prior to projection.
 
 \section{Theoretical Framework}
 
@@ -88,15 +88,15 @@ Substituting this into the entropy definition $S = - \int p(x) \ln p(x) dx$, the
 \begin{equation}
 D_{\text{KL}}(p_0 || \Phi^\dagger p_{\pi}) = \underbrace{\Delta I \cdot \ln 2}_{\text{Informational}} + \underbrace{C_{\Phi}}_{\text{Geometric}},
 \end{equation}
-where $\Delta I$ captures the Shannon information change (in bits), and $C_{\Phi}$ is the ensemble average of the log-volume contraction:
+where $\Delta I$ captures the change in coarse-grained Shannon information at the observer's finite resolution (in bits), and $C_{\Phi}$ is the ensemble average of the log-volume contraction:
 \begin{equation}
 C_{\Phi} = - \frac{1}{2} \left\langle \ln \det (J_{\Phi}(x) J_{\Phi}(x)^\top) \right\rangle_{p(x)}.
 \end{equation}
 
-Combining these terms yields the \textbf{Dimensional Landauer Bound}:
+Combining these terms and defining the \textit{dissipated work} $W_{\text{diss}} \equiv W - \Delta \mathcal{F}_{\text{eq}}$ (the work beyond the free energy difference), we obtain the \textbf{Dimensional Landauer Bound}:
 \begin{equation}
 \label{eq:bound}
-W_{\text{min}} \ge k_B T (\ln 2 \cdot \Delta I + C_{\Phi}).
+W_{\text{diss,min}} \ge k_B T (\ln 2 \cdot \Delta I + C_{\Phi}).
 \end{equation}
 
 \noindent\textbf{Interpretation of $C_{\Phi}$.} For a dimension-reducing map with $D_{\text{out}} < D_{\text{in}}$, the matrix $J_{\Phi} J_{\Phi}^\top$ is the $D_{\text{out}} \times D_{\text{out}}$ Gram matrix on the image. Its determinant equals the squared product of the $D_{\text{out}}$ nonzero singular values $\sigma_i$ of $J_{\Phi}$:
@@ -152,7 +152,7 @@ Crucially, this transition represents a collapse of the \textbf{effective dimens
 \end{figure}
 
 \subsection{Sharp Crossover at the Information Bottleneck}
-To test the bound in a high-dimensional learning context, we analyzed the training of autoencoders under the approximate equivalence between Stochastic Gradient Descent (SGD) and overdamped Langevin dynamics \cite{mandt2017}. This mapping treats the learning rate as an effective temperature; while real SGD exhibits momentum and non-Gaussian (heavy-tailed) noise, the Langevin approximation captures the essential dissipative structure. In this framework, the cumulative squared gradient norm serves as a proxy for thermodynamic work.
+To test the bound in a high-dimensional learning context, we analyzed the training of linear autoencoders---a minimal setting where the bottleneck is analytically interpretable---under the approximate equivalence between Stochastic Gradient Descent (SGD) and overdamped Langevin dynamics \cite{mandt2017}. This mapping treats the learning rate as an effective temperature; while real SGD exhibits momentum and non-Gaussian (heavy-tailed) noise, the Langevin approximation captures the essential dissipative structure. In this framework, the cumulative squared gradient norm serves as a proxy for thermodynamic work.
 
 We trained autoencoders to compress synthetic data lying on a 2D manifold embedded in $\mathbb{R}^{10}$ ($d_{\text{intrinsic}}=2$) into a bottleneck of dimension $d_b$. We observed a sharp \textit{algorithmic crossover} at $d_b = d_{\text{intrinsic}}$ (Fig. \ref{fig:autoencoder}). This divergence is not simply a failure to converge; it marks a critical point in the optimization landscape where the work required to suppress the intrinsic topology of the data grows without bound---analogous to the divergent susceptibility observed near critical points in statistical mechanics, though we emphasize this is a finite-size crossover rather than a thermodynamic phase transition in the strict sense.
 
@@ -166,12 +166,12 @@ We trained autoencoders to compress synthetic data lying on a 2D manifold embedd
 \subsection{Synergetic Self-Organization via Field Coupling}
 Finally, we investigated the role of mean-field coupling in a spatially extended neural sheet (``ephaptic coupling''), drawing on Haken's theory of synergetics \cite{haken1983}. In this framework, a coherent field acts as an \textit{order parameter} that ``slaves'' the individual degrees of freedom, reducing the effective thermodynamic dimension of the system.
 
-While random field injection increased system energy without reducing dimensionality, coherent field coupling successfully reduced the participation ratio and the associated control work---here measured as the variance of the control signal, a proxy for maintenance dissipation (Fig. \ref{fig:ephaptic}). The coherent field acts as an order parameter (in the Haken sense), enslaving the individual degrees of freedom and reducing the effective thermodynamic dimension. This demonstrates that global fields can act as auxiliary control parameters that flatten the manifold, reducing the geometric friction of representation---a thermodynamic instantiation of the slaving principle.
+While random field injection increased system energy without reducing dimensionality, coherent field coupling substantially reduced the control work---here measured as the variance of the control signal, a proxy for maintenance dissipation---while leaving the participation ratio comparable across conditions (Fig. \ref{fig:ephaptic}). The coherent field acts as an order parameter (in the Haken sense), enslaving the individual degrees of freedom through their shared coupling to the collective mode. This demonstrates that global fields can act as auxiliary control parameters that flatten the manifold, reducing the geometric friction of representation---a thermodynamic instantiation of the slaving principle.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{figures/fig4_ephaptic.pdf}
-\caption{\textbf{Synergetic self-organization reduces thermodynamic cost.} (A) Effective dimensionality (participation ratio) of a neural sheet under different coupling conditions. (B) Control work required to maintain coherent activity. Coherent field coupling---acting as an order parameter in the sense of Haken's synergetics---reduces control work by approximately 89\% compared to no field, demonstrating that the slaving principle can serve as a thermodynamic mechanism for efficient dimensional reduction.}
+\caption{\textbf{Synergetic self-organization reduces thermodynamic cost.} (A) Effective dimensionality (participation ratio) of a neural sheet under different coupling conditions; values are comparable across conditions. (B) Control work required to maintain coherent activity. Coherent field coupling---acting as an order parameter in the sense of Haken's synergetics---reduces control work by approximately 89\% compared to no field, demonstrating that the slaving principle can serve as a thermodynamic mechanism for efficient computation even when the participation ratio remains similar.}
 \label{fig:ephaptic}
 \end{figure}
 
@@ -188,10 +188,10 @@ We find that the energy cost is not solely determined by the bit-rate. Two repre
 \subsection{Implications for Biological Efficiency}
 Biological systems must continuously dissipate energy to maintain low-dimensional order. Our results suggest that mechanisms like neural synchronization and ephaptic coupling are thermodynamic adaptations. By confining dynamics to a low-dimensional manifold (e.g., a limit cycle), the system minimizes the dimensionality $D_{\text{in}}$ prior to readout, thereby minimizing the contraction cost $C_{\Phi}$. This offers a thermodynamic explanation for the prevalence of coherent oscillations in neural systems.
 
-\subsection{The Thermodynamics of Structured Noise}
-Finally, our framework offers a thermodynamic resolution to the ambiguity between ``signal'' and ``noise'' in biological systems. Standard information theory treats noise as an entropic nuisance; however, biological signals typically exhibit $1/f^\alpha$ power spectra (``colored noise'') rather than flat white spectra \cite{szendro2001}. We argue that this distinction is fundamental: white noise is infinite-dimensional and delta-correlated, effectively filling the phase space as a heat bath. In contrast, colored noise implies finite correlation time and memory, confining the system to a lower-dimensional submanifold of the state space.
+\subsection{Outlook: The Thermodynamics of Structured Noise}
+Finally, our framework suggests a thermodynamic perspective on the ambiguity between ``signal'' and ``noise'' in biological systems. Standard information theory treats noise as an entropic nuisance; however, biological signals typically exhibit $1/f^\alpha$ power spectra (``colored noise'') rather than flat white spectra \cite{szendro2001}. We propose that this distinction may be thermodynamically significant: memoryless, broadband (white) noise acts as a high-dimensional heat bath that isotropically fills the accessible phase space. In contrast, colored noise---with its finite correlation time and memory---may effectively confine the system to a lower-dimensional submanifold of the state space, altering the contraction landscape captured by $C_{\Phi}$.
 
-Therefore, the generation of ``structured noise'' from a thermal background is itself a work-intensive process of dimensional reduction. As observed in common noise-induced synchronization \cite{zhou2002, teramae2004}, correlated fluctuations can drive a population onto a synchronization manifold, effectively acting as an extrinsic order parameter in the sense of Haken. Recent work has shown that this ``noise dilution'' can enhance stability against external disturbances \cite{ma2025}. In the language of the Dimensional Landauer Bound, these structured fluctuations are not thermodynamic heat; they are low-dimensional control signals whose ``color'' represents the geometry of the confinement forces.
+If correct, the generation of ``structured noise'' from a thermal background would itself be a work-intensive process of dimensional reduction. As observed in common noise-induced synchronization \cite{zhou2002, teramae2004}, correlated fluctuations can drive a population onto a synchronization manifold, effectively acting as an extrinsic order parameter in the sense of Haken. Recent work has shown that this ``noise dilution'' can enhance stability against external disturbances \cite{ma2025}. In the language of the Dimensional Landauer Bound, these structured fluctuations would not be thermodynamic heat; they would be low-dimensional control signals whose ``color'' represents the geometry of the confinement forces. This interpretation remains speculative and warrants further theoretical and experimental investigation.
 
 \section{Conclusion}
 
